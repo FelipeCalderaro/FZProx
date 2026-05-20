@@ -34,6 +34,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     on<SessionGainTick>(_onGainTick);
     on<SessionPeerMetricsUpdated>(_onPeerMetricsUpdated);
     on<SessionProximityParamsChanged>(_onProximityParamsChanged);
+    on<SessionPeerMuteToggled>(_onPeerMuteToggled);
     on<SessionEnded>(_onEnded);
   }
 
@@ -106,14 +107,19 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       final params = current.proximity;
 
       final dist     = xzDistance(current.selfX, current.selfZ, peer.x, peer.z);
-      final rawGain  = gainForDistance(dist, params.near, params.far, params.curve);
-      final rawPan   = params.panning
+      double rawGain = gainForDistance(dist, params.near, params.far, params.curve);
+      double rawPan  = params.panning
           ? panForBearing(
               peer.x - current.selfX,
               peer.z - current.selfZ,
               current.selfYaw,
             )
           : 0.0;
+
+      if (!current.telemetryActive || peer.muted) {
+        rawGain = 0.0;
+        rawPan  = 0.0;
+      }
 
       final smoothed = _proximity.smooth(entry.key, rawGain, rawPan);
       final (gL, gR) = stereoGains(smoothed.gain, smoothed.pan);
@@ -125,6 +131,8 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
         peerZ:      peer.z,
         peerYaw:    peer.yaw,
         peerSpeed:  peer.speed,
+        selfYaw:    current.selfYaw,
+        selfSpeed:  current.selfSpeed,
       );
 
       _audioEngine.setGains(entry.key, gL, gR);
@@ -166,6 +174,17 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     final current = state;
     if (current is! SessionActive) return;
     emit(current.copyWith(proximity: event.params));
+  }
+
+  void _onPeerMuteToggled(
+      SessionPeerMuteToggled event, Emitter<SessionState> emit) {
+    final current = state;
+    if (current is! SessionActive) return;
+    final peer = current.peers[event.id];
+    if (peer == null) return;
+    final updated = Map<int, PeerModel>.from(current.peers)
+      ..[event.id] = peer.copyWith(muted: !peer.muted);
+    emit(current.copyWith(peers: updated));
   }
 
   void _onEnded(SessionEnded event, Emitter<SessionState> emit) {

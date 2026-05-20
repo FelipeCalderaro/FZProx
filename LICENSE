@@ -1,0 +1,54 @@
+HorizonProx — Dual License
+
+Copyright (c) 2026 Felipe Calderaro. All rights reserved.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OPEN-SOURCE LICENSE (GNU GPL v3)
+
+HorizonProx is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, version 3 of the License.
+
+HorizonProx is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+The full text of the GNU General Public License v3 can be found at:
+https://www.gnu.org/licenses/gpl-3.0.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+COMMERCIAL LICENSE
+
+The GPL v3 above governs all non-commercial use. If you wish to use
+HorizonProx or any Derivative Work in a commercial context — including
+but not limited to: selling the Software, offering it as part of a
+paid service, or integrating it into a commercial product — you MUST
+obtain a separate commercial license from the original author.
+
+Only the original author (Felipe Calderaro) may grant commercial licenses.
+No fork, Derivative Work, or third party may grant this right on
+the author's behalf.
+
+For commercial licensing inquiries, contact: j.felipe.calderaro@gmail.com
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DISCLAIMER OF AFFILIATION
+
+HorizonProx is an unofficial, independent community project. It is
+NOT affiliated with, endorsed by, sponsored by, or connected to
+Turn 10 Studios, Xbox Game Studios, Microsoft Corporation, or the
+Forza Horizon franchise in any way.
+
+"Forza Horizon" is a registered trademark of Microsoft Corporation.
+Its use here is purely descriptive (nominative fair use) to identify
+the game this tool is designed to complement.
+
+HorizonProx does not modify, patch, or reverse-engineer any part of
+the Forza Horizon game. It operates exclusively through the game's
+officially published "Data Out" UDP telemetry feature.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

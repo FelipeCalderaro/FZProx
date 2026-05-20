@@ -172,6 +172,8 @@ class SessionRunner {
           peerZ:     peer.z,
           peerYaw:   peer.yaw,
           peerSpeed: peer.speed,
+          selfYaw:   sessionState.selfYaw,
+          selfSpeed: sessionState.selfSpeed,
         );
         final pitched = applyDoppler(samples, factor);
         _audio.enqueuePeerAudio(peerId, pitched);

@@ -605,7 +605,12 @@ class _PeerPanel extends StatelessWidget {
             const Divider(height: 1),
             Expanded(
               child: state is SessionActive
-                  ? PeerTable(peers: state.peers)
+                  ? PeerTable(
+                      peers: state.peers,
+                      onMuteToggle: (id) => context
+                          .read<SessionBloc>()
+                          .add(SessionEvent.peerMuteToggled(id: id)),
+                    )
                   : const Center(
                       child: CircularProgressIndicator(color: kColorPrimary)),
             ),

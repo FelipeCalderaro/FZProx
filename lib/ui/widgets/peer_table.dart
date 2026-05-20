@@ -4,12 +4,13 @@ import '../../models/peer_model.dart';
 import '../theme.dart';
 import 'volume_bar.dart';
 
-/// Live peer table: Player | Dist | Volume | Pan | Doppler | Buf
+/// Live peer table: Player | Dist | Volume | Pan | Doppler | Buf | Mute
 /// Sorted nearest-first.
 class PeerTable extends StatelessWidget {
   final Map<int, PeerModel> peers;
+  final void Function(int peerId)? onMuteToggle;
 
-  const PeerTable({super.key, required this.peers});
+  const PeerTable({super.key, required this.peers, this.onMuteToggle});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class PeerTable extends StatelessWidget {
       children: [
         _Header(),
         const Divider(height: 1),
-        ...sorted.map((p) => _PeerRow(peer: p)),
+        ...sorted.map((p) => _PeerRow(peer: p, onMuteToggle: onMuteToggle)),
       ],
     );
   }
@@ -56,11 +57,12 @@ class _Header extends StatelessWidget {
       child: Row(
         children: [
           Expanded(flex: 3, child: Text('Player',  style: style)),
-          SizedBox(width: 64, child: Text('Dist',    style: style, textAlign: TextAlign.right)),
-          SizedBox(width: 108, child: Text('Volume', style: style, textAlign: TextAlign.center)),
-          SizedBox(width: 72,  child: Text('Pan',    style: style, textAlign: TextAlign.center)),
-          SizedBox(width: 72,  child: Text('Doppler',style: style, textAlign: TextAlign.center)),
-          SizedBox(width: 56,  child: Text('Buf',    style: style, textAlign: TextAlign.right)),
+          SizedBox(width: 64,  child: Text('Dist',    style: style, textAlign: TextAlign.right)),
+          SizedBox(width: 108, child: Text('Volume',  style: style, textAlign: TextAlign.center)),
+          SizedBox(width: 72,  child: Text('Pan',     style: style, textAlign: TextAlign.center)),
+          SizedBox(width: 72,  child: Text('Doppler', style: style, textAlign: TextAlign.center)),
+          SizedBox(width: 56,  child: Text('Buf',     style: style, textAlign: TextAlign.right)),
+          const SizedBox(width: 40), // Mute column — no header text
         ],
       ),
     );
@@ -69,19 +71,22 @@ class _Header extends StatelessWidget {
 
 class _PeerRow extends StatelessWidget {
   final PeerModel peer;
-  const _PeerRow({required this.peer});
+  final void Function(int peerId)? onMuteToggle;
+
+  const _PeerRow({required this.peer, this.onMuteToggle});
 
   @override
   Widget build(BuildContext context) {
-    final tt    = Theme.of(context).textTheme;
+    final tt   = Theme.of(context).textTheme;
     // rawGain is the proximity gain before the stereo/equal-power split,
     // so it correctly reads 1.0 (100%) when inside the near radius.
-    final gain  = peer.rawGain.clamp(0.0, 1.0);
-    final mono  = '${(gain * 100).toStringAsFixed(0)}%'.padLeft(4);
+    final gain = peer.rawGain.clamp(0.0, 1.0);
+    final mono = '${(gain * 100).toStringAsFixed(0)}%'.padLeft(4);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
+        color: peer.muted ? kColorCard.withAlpha(180) : null,
         border: Border(bottom: BorderSide(color: kColorBorder.withAlpha(80))),
       ),
       child: Row(
@@ -90,14 +95,16 @@ class _PeerRow extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Row(children: [
-              _StatusDot(active: peer.distanceM > 0),
+              _StatusDot(active: peer.distanceM > 0 && !peer.muted),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   peer.name.length > 18
                       ? '${peer.name.substring(0, 17)}…'
                       : peer.name,
-                  style: tt.bodyLarge,
+                  style: tt.bodyLarge?.copyWith(
+                    color: peer.muted ? kColorTextMuted : null,
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -109,50 +116,82 @@ class _PeerRow extends StatelessWidget {
             child: Text(
               '${peer.distanceM.toStringAsFixed(1)} m',
               style: tt.bodyMedium
-                  ?.copyWith(fontFamily: 'monospace', color: kColorText),
+                  ?.copyWith(fontFamily: 'monospace', color: peer.muted ? kColorTextMuted : kColorText),
               textAlign: TextAlign.right,
             ),
           ),
           // Volume bar + %
           SizedBox(
             width: 108,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                VolumeBar(value: gain, width: 60),
-                const SizedBox(width: 6),
-                Text(mono,
-                    style: tt.bodyMedium?.copyWith(
-                        fontFamily: 'monospace', color: kColorText),
-                    textAlign: TextAlign.right),
-              ],
-            ),
+            child: peer.muted
+                ? Center(
+                    child: Text('MUTED',
+                        style: tt.labelSmall?.copyWith(
+                          color: kColorError,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1.0,
+                        )),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      VolumeBar(value: gain, width: 60),
+                      const SizedBox(width: 6),
+                      Text(mono,
+                          style: tt.bodyMedium?.copyWith(
+                              fontFamily: 'monospace', color: kColorText),
+                          textAlign: TextAlign.right),
+                    ],
+                  ),
           ),
           // Pan
           SizedBox(
             width: 72,
-            child: Center(child: PanIndicator(pan: peer.pan)),
+            child: Center(
+              child: peer.muted
+                  ? const SizedBox.shrink()
+                  : PanIndicator(pan: peer.pan),
+            ),
           ),
           // Doppler
           SizedBox(
             width: 72,
-            child: Text(
-              peer.dopplerFactor.toStringAsFixed(3),
-              style: tt.bodyMedium?.copyWith(
-                fontFamily: 'monospace',
-                color: _dopplerColor(peer.dopplerFactor),
-              ),
-              textAlign: TextAlign.center,
-            ),
+            child: peer.muted
+                ? const SizedBox.shrink()
+                : Text(
+                    peer.dopplerFactor.toStringAsFixed(3),
+                    style: tt.bodyMedium?.copyWith(
+                      fontFamily: 'monospace',
+                      color: _dopplerColor(peer.dopplerFactor),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
           ),
           // Buffer
           SizedBox(
             width: 56,
             child: Text(
-              '${peer.bufferMs} ms',
+              peer.muted ? '—' : '${peer.bufferMs} ms',
               style: tt.bodyMedium
                   ?.copyWith(fontFamily: 'monospace', color: kColorTextMuted),
               textAlign: TextAlign.right,
+            ),
+          ),
+          // Mute button
+          SizedBox(
+            width: 40,
+            child: IconButton(
+              iconSize:   18,
+              splashRadius: 16,
+              padding:    EdgeInsets.zero,
+              tooltip:    peer.muted ? 'Unmute ${peer.name}' : 'Mute ${peer.name}',
+              icon: Icon(
+                peer.muted ? Icons.volume_off_rounded : Icons.volume_up_rounded,
+                color: peer.muted ? kColorError : kColorTextMuted,
+              ),
+              onPressed: onMuteToggle != null
+                  ? () => onMuteToggle!(peer.id)
+                  : null,
             ),
           ),
         ],
@@ -161,7 +200,7 @@ class _PeerRow extends StatelessWidget {
   }
 
   Color _dopplerColor(double f) {
-    if (f > 1.05) return kColorError;    // approaching fast
+    if (f > 1.05) return kColorError;     // approaching fast
     if (f < 0.95) return kColorSecondary; // receding fast
     return kColorTextMuted;
   }

@@ -17,8 +17,10 @@ class PeerModel with _$PeerModel {
     @Default(0.0) double gainL,
     @Default(0.0) double gainR,
     @Default(0.0) double rawGain,      // proximity gain before stereo split (0..1)
-    @Default(0.0) double pan,        // -1..+1
+    @Default(0.0) double pan,          // -1..+1
     @Default(1.0) double dopplerFactor,
     @Default(0)   int    bufferMs,
+    // Manual mute — silences this peer regardless of proximity
+    @Default(false) bool muted,
   }) = _PeerModel;
 }

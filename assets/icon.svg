@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Background Color: _kPrimary (Forza orange) from theme.dart -->
+
+    <!-- Glassmorphism Gradient for the bubble -->
+    <linearGradient id="glass-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.05" />
+    </linearGradient>
+
+    <!-- Deep Soft Shadow for Fluent/Material Depth -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.3" />
+    </filter>
+
+    <!-- Inner Shadow for the Soundwave -->
+    <filter id="inner-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.2" />
+    </filter>
+  </defs>
+
+  <!-- 1. Solid Base Squircle using theme color -->
+  <rect width="512" height="512" rx="120" ry="120" fill="#FF6B00" />
+
+  <!-- 2. Glassmorphic Chat Bubble (Proximity/Communication) -->
+  <!-- Tactile layer with subtle stroke mimicking a glass edge -->
+  <path d="M 256 106 
+           C 173 106, 106 173, 106 256
+           C 106 288, 117 317, 134 343
+           L 110 395
+           L 165 375
+           C 190 395, 221 406, 256 406
+           C 338 406, 406 338, 406 256
+           C 406 173, 338 106, 256 106
+           Z"
+        fill="url(#glass-grad)" 
+        stroke="#ffffff" stroke-width="4" stroke-opacity="0.7"
+        filter="url(#shadow)" />
+
+  <!-- 3. Dynamic Soundwave (Telemetry/Audio) -->
+  <!-- Skewed to represent speed and racing (Forza aspect) -->
+  <g transform="translate(256, 256) skewX(-12) translate(-256, -256)" fill="#FFFFFF" filter="url(#inner-shadow)">
+    <!-- Bar 1 -->
+    <rect x="192" y="236" width="16" height="40" rx="8" />
+    <!-- Bar 2 -->
+    <rect x="220" y="216" width="16" height="80" rx="8" />
+    <!-- Bar 3 (Center) -->
+    <rect x="248" y="196" width="16" height="120" rx="8" />
+    <!-- Bar 4 -->
+    <rect x="276" y="216" width="16" height="80" rx="8" />
+    <!-- Bar 5 -->
+    <rect x="304" y="241" width="16" height="30" rx="8" />
+  </g>
+</svg>

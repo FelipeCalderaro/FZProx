@@ -50,5 +50,9 @@ class SessionEvent with _$SessionEvent {
     required ProximityParams params,
   }) = SessionProximityParamsChanged;
 
+  /// Toggles the manual mute flag for a peer.
+  /// When muted the gain loop sends 0,0 gains (EMA fades the peer out smoothly).
+  const factory SessionEvent.peerMuteToggled({required int id}) = SessionPeerMuteToggled;
+
   const factory SessionEvent.ended() = SessionEnded;
 }

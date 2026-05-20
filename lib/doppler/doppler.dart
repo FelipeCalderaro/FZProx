@@ -4,7 +4,15 @@ import 'dart:typed_data';
 const double _vSound = 343.0; // m/s
 
 /// Returns the Doppler frequency factor for a peer approaching or receding.
-/// Returns 1.0 for negligible effects (still / too close).
+///
+/// Uses the full two-body Doppler formula:
+///   f' = f * (v_sound + v_observer) / (v_sound - v_source)
+///
+/// Both the observer (self) and source (peer) radial velocity components are
+/// projected onto the peer→self axis.  [selfYaw] and [selfSpeed] are optional
+/// so existing call-sites that only supply peer motion still compile.
+///
+/// Returns 1.0 when the net effect is negligible.
 double computeDopplerFactor({
   required double selfX,
   required double selfZ,
@@ -12,26 +20,41 @@ double computeDopplerFactor({
   required double peerZ,
   required double peerYaw,
   required double peerSpeed,
+  double selfYaw   = 0.0,
+  double selfSpeed = 0.0,
 }) {
   final dx   = selfX - peerX;
   final dz   = selfZ - peerZ;
   final dist = sqrt(dx * dx + dz * dz);
 
-  if (dist < 1.0 || peerSpeed < 0.5) return 1.0;
+  if (dist < 1.0) return 1.0;
 
-  // Unit vector from peer toward self
+  // Unit vector from peer toward self (direction audio propagates)
   final nx = dx / dist;
   final nz = dz / dist;
 
-  // Peer velocity in world space: sin(yaw)=X, cos(yaw)=Z
-  final vx = peerSpeed * sin(peerYaw);
-  final vz = peerSpeed * cos(peerYaw);
+  // Peer (source) velocity component toward listener — positive = approaching
+  double vSource = 0.0;
+  if (peerSpeed >= 0.5) {
+    final vx = peerSpeed * sin(peerYaw);
+    final vz = peerSpeed * cos(peerYaw);
+    vSource = vx * nx + vz * nz;
+  }
 
-  var vToward = vx * nx + vz * nz;
-  var denom   = _vSound - vToward;
+  // Observer (self) velocity component toward source — positive = moving toward peer
+  double vObserver = 0.0;
+  if (selfSpeed >= 0.5) {
+    final vx = selfSpeed * sin(selfYaw);
+    final vz = selfSpeed * cos(selfYaw);
+    // Project self velocity onto the peer→self direction, then negate
+    // (positive vObserver means self is moving toward peer)
+    vObserver = -(vx * nx + vz * nz);
+  }
+
+  var denom = _vSound - vSource;
   if (denom.abs() < 10.0) denom = denom.isNegative ? -10.0 : 10.0;
 
-  return (_vSound / denom).clamp(0.7, 1.5);
+  return ((_vSound + vObserver) / denom).clamp(0.5, 2.0);
 }
 
 /// Pitch-shifts [frame] (960 int16 mono samples) by [factor] via linear interp.
