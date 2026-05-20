@@ -70,10 +70,11 @@ Uint8List encodeState(double x, double z, double yaw, double speed) {
   return encodeMessage(kC2hState, bd.buffer.asUint8List());
 }
 
-/// AUDIO: raw 1920-byte PCM frame.
-Uint8List encodeAudio(Uint8List pcmBytes) {
-  assert(pcmBytes.length == kPcmBytes);
-  return encodeMessage(kC2hAudio, pcmBytes);
+/// AUDIO: encoded audio payload — either raw 1920-byte PCM or a variable-length
+/// Opus packet. The hub relays it unchanged; the receiver detects the format by
+/// payload length (1920 = raw PCM, anything else = Opus).
+Uint8List encodeAudio(Uint8List audioBytes) {
+  return encodeMessage(kC2hAudio, audioBytes);
 }
 
 // ── Parsing helpers ───────────────────────────────────────────────────────────
