@@ -33,7 +33,7 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
   Future<void> _onConnect(
       ConnectionConnect event, Emitter<ConnectionState> emit) async {
     emit(ConnectionState.connecting(
-        hubHost: event.hubHost, hubPort: event.hubPort));
+        hubHost: event.hubHost, hubPort: event.hubPort, username: event.username));
     try {
       _client = HorizonClient(host: event.hubHost, port: event.hubPort);
       await _client!.connect();
@@ -132,7 +132,7 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
     if (current is ConnectionConnecting) {
       hubHost  = current.hubHost;
       hubPort  = current.hubPort;
-      username = '';
+      username = current.username;
     } else if (current is ConnectionSelectingRoom) {
       hubHost  = current.hubHost;
       hubPort  = current.hubPort;

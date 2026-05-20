@@ -185,8 +185,9 @@ class _FzproxAppState extends State<FzproxApp> {
       if (state is SetupCompleteState) {
         _pendingConfig = state.config;
         _connectionBloc.add(ConnectionEvent.connect(
-          hubHost: state.config.hubHost,
-          hubPort: state.config.hubPort,
+          hubHost:  state.config.hubHost,
+          hubPort:  state.config.hubPort,
+          username: state.config.username,
         ));
       }
     });

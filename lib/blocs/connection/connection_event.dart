@@ -5,6 +5,7 @@ class ConnectionEvent with _$ConnectionEvent {
   const factory ConnectionEvent.connect({
     required String hubHost,
     required int    hubPort,
+    required String username,
   }) = ConnectionConnect;
 
   const factory ConnectionEvent.listRooms() = ConnectionListRooms;

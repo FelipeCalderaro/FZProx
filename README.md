@@ -200,6 +200,32 @@ Controls how audio fades with distance. The defaults work well — only change t
 
 ---
 
+## Self-Hosting the Hub (Advanced)
+
+If you want to run a dedicated 24/7 hub on a cloud server instead of hosting it locally on your PC, a lightweight standalone **Go** version of the hub is provided in the `hub/` directory.
+
+### Running with Docker Compose (Recommended)
+
+1. Clone the repository to your server and navigate to the `hub/` folder:
+   ```bash
+   git clone https://github.com/FelipeCalderaro/FZProx.git
+   cd FZProx/hub
+   ```
+2. Run Docker Compose:
+   ```bash
+   docker-compose up -d
+   ```
+3. The hub will now be listening on port `9200`. You and your friends can connect the HorizonProx client directly to your server's public IP address.
+
+### Customizing the Port
+
+To change the default port, simply set the `PORT` environment variable. For example, to run on port `8080`:
+```bash
+PORT=8080 docker-compose up -d
+```
+
+---
+
 ## License
 
 HorizonProx is distributed under a **dual license** model:

@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  fzprox-hub:
+    build: .
+    container_name: fzprox-hub
+    ports:
+      # Expose port 9200 for TCP connections
+      - "9200:9200"
+    environment:
+      # You can change the port by setting this env var and updating the ports mapping above
+      - PORT=9200
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

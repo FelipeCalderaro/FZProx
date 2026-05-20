@@ -32,6 +32,11 @@ class AudioEngine {
   /// the sender loop.  Set by [LocalTestController] to feed the test peer.
   void Function(Int16List frame)? onCaptureFrame;
 
+  /// Scalar gain applied to every captured frame before it is sent to peers.
+  /// 1.0 = unity (100 %), 2.0 = double amplitude (200 %), etc.
+  /// Range is clamped to [0.0, 5.0] when applied.
+  double captureGain = 1.0;
+
   /// When true the mix loop adds the most-recent captured frame at full gain
   /// so you hear your own input immediately (monitor / sidetone).
   bool monitorEnabled = false;
@@ -143,6 +148,15 @@ class AudioEngine {
     }
 
     if (frame != null) {
+      // Apply capture gain (can exceed 1.0 for boosting quiet sources)
+      final gain = captureGain.clamp(0.0, 5.0);
+      if (gain != 1.0) {
+        for (var i = 0; i < kFrameSamples; i++) {
+          final boosted = (frame[i] * gain).round().clamp(-32768, 32767);
+          frame[i] = boosted;
+        }
+      }
+
       // Calculate RMS for VU meter
       double sumSq = 0.0;
       for (var i = 0; i < kFrameSamples; i++) {

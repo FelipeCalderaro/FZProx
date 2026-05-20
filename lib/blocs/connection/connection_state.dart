@@ -7,6 +7,7 @@ class ConnectionState with _$ConnectionState {
   const factory ConnectionState.connecting({
     required String hubHost,
     required int    hubPort,
+    required String username,
   }) = ConnectionConnecting;
 
   /// Connected; waiting for room choice.

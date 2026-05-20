@@ -18,7 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ConnectionEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String hubHost, int hubPort) connect,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connect,
     required TResult Function() listRooms,
     required TResult Function(String code, String username) joinRoom,
     required TResult Function(String username) createRoom,
@@ -34,7 +35,7 @@ mixin _$ConnectionEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String hubHost, int hubPort)? connect,
+    TResult? Function(String hubHost, int hubPort, String username)? connect,
     TResult? Function()? listRooms,
     TResult? Function(String code, String username)? joinRoom,
     TResult? Function(String username)? createRoom,
@@ -50,7 +51,7 @@ mixin _$ConnectionEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String hubHost, int hubPort)? connect,
+    TResult Function(String hubHost, int hubPort, String username)? connect,
     TResult Function()? listRooms,
     TResult Function(String code, String username)? joinRoom,
     TResult Function(String username)? createRoom,
@@ -138,7 +139,7 @@ abstract class _$$ConnectionConnectImplCopyWith<$Res> {
           $Res Function(_$ConnectionConnectImpl) then) =
       __$$ConnectionConnectImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String hubHost, int hubPort});
+  $Res call({String hubHost, int hubPort, String username});
 }
 
 /// @nodoc
@@ -156,6 +157,7 @@ class __$$ConnectionConnectImplCopyWithImpl<$Res>
   $Res call({
     Object? hubHost = null,
     Object? hubPort = null,
+    Object? username = null,
   }) {
     return _then(_$ConnectionConnectImpl(
       hubHost: null == hubHost
@@ -166,6 +168,10 @@ class __$$ConnectionConnectImplCopyWithImpl<$Res>
           ? _value.hubPort
           : hubPort // ignore: cast_nullable_to_non_nullable
               as int,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -173,16 +179,19 @@ class __$$ConnectionConnectImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ConnectionConnectImpl implements ConnectionConnect {
-  const _$ConnectionConnectImpl({required this.hubHost, required this.hubPort});
+  const _$ConnectionConnectImpl(
+      {required this.hubHost, required this.hubPort, required this.username});
 
   @override
   final String hubHost;
   @override
   final int hubPort;
+  @override
+  final String username;
 
   @override
   String toString() {
-    return 'ConnectionEvent.connect(hubHost: $hubHost, hubPort: $hubPort)';
+    return 'ConnectionEvent.connect(hubHost: $hubHost, hubPort: $hubPort, username: $username)';
   }
 
   @override
@@ -191,11 +200,13 @@ class _$ConnectionConnectImpl implements ConnectionConnect {
         (other.runtimeType == runtimeType &&
             other is _$ConnectionConnectImpl &&
             (identical(other.hubHost, hubHost) || other.hubHost == hubHost) &&
-            (identical(other.hubPort, hubPort) || other.hubPort == hubPort));
+            (identical(other.hubPort, hubPort) || other.hubPort == hubPort) &&
+            (identical(other.username, username) ||
+                other.username == username));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, hubHost, hubPort);
+  int get hashCode => Object.hash(runtimeType, hubHost, hubPort, username);
 
   /// Create a copy of ConnectionEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -209,7 +220,8 @@ class _$ConnectionConnectImpl implements ConnectionConnect {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String hubHost, int hubPort) connect,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connect,
     required TResult Function() listRooms,
     required TResult Function(String code, String username) joinRoom,
     required TResult Function(String username) createRoom,
@@ -222,13 +234,13 @@ class _$ConnectionConnectImpl implements ConnectionConnect {
     required TResult Function(int id, String name) peerJoined,
     required TResult Function(int id) peerLeft,
   }) {
-    return connect(hubHost, hubPort);
+    return connect(hubHost, hubPort, username);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String hubHost, int hubPort)? connect,
+    TResult? Function(String hubHost, int hubPort, String username)? connect,
     TResult? Function()? listRooms,
     TResult? Function(String code, String username)? joinRoom,
     TResult? Function(String username)? createRoom,
@@ -241,13 +253,13 @@ class _$ConnectionConnectImpl implements ConnectionConnect {
     TResult? Function(int id, String name)? peerJoined,
     TResult? Function(int id)? peerLeft,
   }) {
-    return connect?.call(hubHost, hubPort);
+    return connect?.call(hubHost, hubPort, username);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String hubHost, int hubPort)? connect,
+    TResult Function(String hubHost, int hubPort, String username)? connect,
     TResult Function()? listRooms,
     TResult Function(String code, String username)? joinRoom,
     TResult Function(String username)? createRoom,
@@ -262,7 +274,7 @@ class _$ConnectionConnectImpl implements ConnectionConnect {
     required TResult orElse(),
   }) {
     if (connect != null) {
-      return connect(hubHost, hubPort);
+      return connect(hubHost, hubPort, username);
     }
     return orElse();
   }
@@ -327,10 +339,12 @@ class _$ConnectionConnectImpl implements ConnectionConnect {
 abstract class ConnectionConnect implements ConnectionEvent {
   const factory ConnectionConnect(
       {required final String hubHost,
-      required final int hubPort}) = _$ConnectionConnectImpl;
+      required final int hubPort,
+      required final String username}) = _$ConnectionConnectImpl;
 
   String get hubHost;
   int get hubPort;
+  String get username;
 
   /// Create a copy of ConnectionEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -381,7 +395,8 @@ class _$ConnectionListRoomsImpl implements ConnectionListRooms {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String hubHost, int hubPort) connect,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connect,
     required TResult Function() listRooms,
     required TResult Function(String code, String username) joinRoom,
     required TResult Function(String username) createRoom,
@@ -400,7 +415,7 @@ class _$ConnectionListRoomsImpl implements ConnectionListRooms {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String hubHost, int hubPort)? connect,
+    TResult? Function(String hubHost, int hubPort, String username)? connect,
     TResult? Function()? listRooms,
     TResult? Function(String code, String username)? joinRoom,
     TResult? Function(String username)? createRoom,
@@ -419,7 +434,7 @@ class _$ConnectionListRoomsImpl implements ConnectionListRooms {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String hubHost, int hubPort)? connect,
+    TResult Function(String hubHost, int hubPort, String username)? connect,
     TResult Function()? listRooms,
     TResult Function(String code, String username)? joinRoom,
     TResult Function(String username)? createRoom,
@@ -578,7 +593,8 @@ class _$ConnectionJoinRoomImpl implements ConnectionJoinRoom {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String hubHost, int hubPort) connect,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connect,
     required TResult Function() listRooms,
     required TResult Function(String code, String username) joinRoom,
     required TResult Function(String username) createRoom,
@@ -597,7 +613,7 @@ class _$ConnectionJoinRoomImpl implements ConnectionJoinRoom {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String hubHost, int hubPort)? connect,
+    TResult? Function(String hubHost, int hubPort, String username)? connect,
     TResult? Function()? listRooms,
     TResult? Function(String code, String username)? joinRoom,
     TResult? Function(String username)? createRoom,
@@ -616,7 +632,7 @@ class _$ConnectionJoinRoomImpl implements ConnectionJoinRoom {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String hubHost, int hubPort)? connect,
+    TResult Function(String hubHost, int hubPort, String username)? connect,
     TResult Function()? listRooms,
     TResult Function(String code, String username)? joinRoom,
     TResult Function(String username)? createRoom,
@@ -779,7 +795,8 @@ class _$ConnectionCreateRoomImpl implements ConnectionCreateRoom {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String hubHost, int hubPort) connect,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connect,
     required TResult Function() listRooms,
     required TResult Function(String code, String username) joinRoom,
     required TResult Function(String username) createRoom,
@@ -798,7 +815,7 @@ class _$ConnectionCreateRoomImpl implements ConnectionCreateRoom {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String hubHost, int hubPort)? connect,
+    TResult? Function(String hubHost, int hubPort, String username)? connect,
     TResult? Function()? listRooms,
     TResult? Function(String code, String username)? joinRoom,
     TResult? Function(String username)? createRoom,
@@ -817,7 +834,7 @@ class _$ConnectionCreateRoomImpl implements ConnectionCreateRoom {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String hubHost, int hubPort)? connect,
+    TResult Function(String hubHost, int hubPort, String username)? connect,
     TResult Function()? listRooms,
     TResult Function(String code, String username)? joinRoom,
     TResult Function(String username)? createRoom,
@@ -949,7 +966,8 @@ class _$ConnectionDisconnectImpl implements ConnectionDisconnect {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String hubHost, int hubPort) connect,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connect,
     required TResult Function() listRooms,
     required TResult Function(String code, String username) joinRoom,
     required TResult Function(String username) createRoom,
@@ -968,7 +986,7 @@ class _$ConnectionDisconnectImpl implements ConnectionDisconnect {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String hubHost, int hubPort)? connect,
+    TResult? Function(String hubHost, int hubPort, String username)? connect,
     TResult? Function()? listRooms,
     TResult? Function(String code, String username)? joinRoom,
     TResult? Function(String username)? createRoom,
@@ -987,7 +1005,7 @@ class _$ConnectionDisconnectImpl implements ConnectionDisconnect {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String hubHost, int hubPort)? connect,
+    TResult Function(String hubHost, int hubPort, String username)? connect,
     TResult Function()? listRooms,
     TResult Function(String code, String username)? joinRoom,
     TResult Function(String username)? createRoom,
@@ -1147,7 +1165,8 @@ class _$ConnectionRoomListReceivedImpl implements ConnectionRoomListReceived {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String hubHost, int hubPort) connect,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connect,
     required TResult Function() listRooms,
     required TResult Function(String code, String username) joinRoom,
     required TResult Function(String username) createRoom,
@@ -1166,7 +1185,7 @@ class _$ConnectionRoomListReceivedImpl implements ConnectionRoomListReceived {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String hubHost, int hubPort)? connect,
+    TResult? Function(String hubHost, int hubPort, String username)? connect,
     TResult? Function()? listRooms,
     TResult? Function(String code, String username)? joinRoom,
     TResult? Function(String username)? createRoom,
@@ -1185,7 +1204,7 @@ class _$ConnectionRoomListReceivedImpl implements ConnectionRoomListReceived {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String hubHost, int hubPort)? connect,
+    TResult Function(String hubHost, int hubPort, String username)? connect,
     TResult Function()? listRooms,
     TResult Function(String code, String username)? joinRoom,
     TResult Function(String username)? createRoom,
@@ -1373,7 +1392,8 @@ class _$ConnectionWelcomeReceivedImpl implements ConnectionWelcomeReceived {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String hubHost, int hubPort) connect,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connect,
     required TResult Function() listRooms,
     required TResult Function(String code, String username) joinRoom,
     required TResult Function(String username) createRoom,
@@ -1392,7 +1412,7 @@ class _$ConnectionWelcomeReceivedImpl implements ConnectionWelcomeReceived {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String hubHost, int hubPort)? connect,
+    TResult? Function(String hubHost, int hubPort, String username)? connect,
     TResult? Function()? listRooms,
     TResult? Function(String code, String username)? joinRoom,
     TResult? Function(String username)? createRoom,
@@ -1411,7 +1431,7 @@ class _$ConnectionWelcomeReceivedImpl implements ConnectionWelcomeReceived {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String hubHost, int hubPort)? connect,
+    TResult Function(String hubHost, int hubPort, String username)? connect,
     TResult Function()? listRooms,
     TResult Function(String code, String username)? joinRoom,
     TResult Function(String username)? createRoom,
@@ -1577,7 +1597,8 @@ class _$ConnectionErrorReceivedImpl implements ConnectionErrorReceived {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String hubHost, int hubPort) connect,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connect,
     required TResult Function() listRooms,
     required TResult Function(String code, String username) joinRoom,
     required TResult Function(String username) createRoom,
@@ -1596,7 +1617,7 @@ class _$ConnectionErrorReceivedImpl implements ConnectionErrorReceived {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String hubHost, int hubPort)? connect,
+    TResult? Function(String hubHost, int hubPort, String username)? connect,
     TResult? Function()? listRooms,
     TResult? Function(String code, String username)? joinRoom,
     TResult? Function(String username)? createRoom,
@@ -1615,7 +1636,7 @@ class _$ConnectionErrorReceivedImpl implements ConnectionErrorReceived {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String hubHost, int hubPort)? connect,
+    TResult Function(String hubHost, int hubPort, String username)? connect,
     TResult Function()? listRooms,
     TResult Function(String code, String username)? joinRoom,
     TResult Function(String username)? createRoom,
@@ -1783,7 +1804,8 @@ class _$ConnectionPeerJoinedImpl implements ConnectionPeerJoined {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String hubHost, int hubPort) connect,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connect,
     required TResult Function() listRooms,
     required TResult Function(String code, String username) joinRoom,
     required TResult Function(String username) createRoom,
@@ -1802,7 +1824,7 @@ class _$ConnectionPeerJoinedImpl implements ConnectionPeerJoined {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String hubHost, int hubPort)? connect,
+    TResult? Function(String hubHost, int hubPort, String username)? connect,
     TResult? Function()? listRooms,
     TResult? Function(String code, String username)? joinRoom,
     TResult? Function(String username)? createRoom,
@@ -1821,7 +1843,7 @@ class _$ConnectionPeerJoinedImpl implements ConnectionPeerJoined {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String hubHost, int hubPort)? connect,
+    TResult Function(String hubHost, int hubPort, String username)? connect,
     TResult Function()? listRooms,
     TResult Function(String code, String username)? joinRoom,
     TResult Function(String username)? createRoom,
@@ -1982,7 +2004,8 @@ class _$ConnectionPeerLeftImpl implements ConnectionPeerLeft {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String hubHost, int hubPort) connect,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connect,
     required TResult Function() listRooms,
     required TResult Function(String code, String username) joinRoom,
     required TResult Function(String username) createRoom,
@@ -2001,7 +2024,7 @@ class _$ConnectionPeerLeftImpl implements ConnectionPeerLeft {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String hubHost, int hubPort)? connect,
+    TResult? Function(String hubHost, int hubPort, String username)? connect,
     TResult? Function()? listRooms,
     TResult? Function(String code, String username)? joinRoom,
     TResult? Function(String username)? createRoom,
@@ -2020,7 +2043,7 @@ class _$ConnectionPeerLeftImpl implements ConnectionPeerLeft {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String hubHost, int hubPort)? connect,
+    TResult Function(String hubHost, int hubPort, String username)? connect,
     TResult Function()? listRooms,
     TResult Function(String code, String username)? joinRoom,
     TResult Function(String username)? createRoom,
@@ -2115,7 +2138,8 @@ mixin _$ConnectionState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
-    required TResult Function(String hubHost, int hubPort) connecting,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connecting,
     required TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)
         selectingRoom,
@@ -2136,7 +2160,7 @@ mixin _$ConnectionState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? idle,
-    TResult? Function(String hubHost, int hubPort)? connecting,
+    TResult? Function(String hubHost, int hubPort, String username)? connecting,
     TResult? Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -2157,7 +2181,7 @@ mixin _$ConnectionState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
-    TResult Function(String hubHost, int hubPort)? connecting,
+    TResult Function(String hubHost, int hubPort, String username)? connecting,
     TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -2272,7 +2296,8 @@ class _$ConnectionIdleImpl implements ConnectionIdle {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
-    required TResult Function(String hubHost, int hubPort) connecting,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connecting,
     required TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)
         selectingRoom,
@@ -2296,7 +2321,7 @@ class _$ConnectionIdleImpl implements ConnectionIdle {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? idle,
-    TResult? Function(String hubHost, int hubPort)? connecting,
+    TResult? Function(String hubHost, int hubPort, String username)? connecting,
     TResult? Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -2320,7 +2345,7 @@ class _$ConnectionIdleImpl implements ConnectionIdle {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
-    TResult Function(String hubHost, int hubPort)? connecting,
+    TResult Function(String hubHost, int hubPort, String username)? connecting,
     TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -2398,7 +2423,7 @@ abstract class _$$ConnectionConnectingImplCopyWith<$Res> {
           $Res Function(_$ConnectionConnectingImpl) then) =
       __$$ConnectionConnectingImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String hubHost, int hubPort});
+  $Res call({String hubHost, int hubPort, String username});
 }
 
 /// @nodoc
@@ -2416,6 +2441,7 @@ class __$$ConnectionConnectingImplCopyWithImpl<$Res>
   $Res call({
     Object? hubHost = null,
     Object? hubPort = null,
+    Object? username = null,
   }) {
     return _then(_$ConnectionConnectingImpl(
       hubHost: null == hubHost
@@ -2426,6 +2452,10 @@ class __$$ConnectionConnectingImplCopyWithImpl<$Res>
           ? _value.hubPort
           : hubPort // ignore: cast_nullable_to_non_nullable
               as int,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -2434,16 +2464,18 @@ class __$$ConnectionConnectingImplCopyWithImpl<$Res>
 
 class _$ConnectionConnectingImpl implements ConnectionConnecting {
   const _$ConnectionConnectingImpl(
-      {required this.hubHost, required this.hubPort});
+      {required this.hubHost, required this.hubPort, required this.username});
 
   @override
   final String hubHost;
   @override
   final int hubPort;
+  @override
+  final String username;
 
   @override
   String toString() {
-    return 'ConnectionState.connecting(hubHost: $hubHost, hubPort: $hubPort)';
+    return 'ConnectionState.connecting(hubHost: $hubHost, hubPort: $hubPort, username: $username)';
   }
 
   @override
@@ -2452,11 +2484,13 @@ class _$ConnectionConnectingImpl implements ConnectionConnecting {
         (other.runtimeType == runtimeType &&
             other is _$ConnectionConnectingImpl &&
             (identical(other.hubHost, hubHost) || other.hubHost == hubHost) &&
-            (identical(other.hubPort, hubPort) || other.hubPort == hubPort));
+            (identical(other.hubPort, hubPort) || other.hubPort == hubPort) &&
+            (identical(other.username, username) ||
+                other.username == username));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, hubHost, hubPort);
+  int get hashCode => Object.hash(runtimeType, hubHost, hubPort, username);
 
   /// Create a copy of ConnectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -2472,7 +2506,8 @@ class _$ConnectionConnectingImpl implements ConnectionConnecting {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
-    required TResult Function(String hubHost, int hubPort) connecting,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connecting,
     required TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)
         selectingRoom,
@@ -2489,14 +2524,14 @@ class _$ConnectionConnectingImpl implements ConnectionConnecting {
         inSession,
     required TResult Function(String message) failed,
   }) {
-    return connecting(hubHost, hubPort);
+    return connecting(hubHost, hubPort, username);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? idle,
-    TResult? Function(String hubHost, int hubPort)? connecting,
+    TResult? Function(String hubHost, int hubPort, String username)? connecting,
     TResult? Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -2513,14 +2548,14 @@ class _$ConnectionConnectingImpl implements ConnectionConnecting {
         inSession,
     TResult? Function(String message)? failed,
   }) {
-    return connecting?.call(hubHost, hubPort);
+    return connecting?.call(hubHost, hubPort, username);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
-    TResult Function(String hubHost, int hubPort)? connecting,
+    TResult Function(String hubHost, int hubPort, String username)? connecting,
     TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -2539,7 +2574,7 @@ class _$ConnectionConnectingImpl implements ConnectionConnecting {
     required TResult orElse(),
   }) {
     if (connecting != null) {
-      return connecting(hubHost, hubPort);
+      return connecting(hubHost, hubPort, username);
     }
     return orElse();
   }
@@ -2591,10 +2626,12 @@ class _$ConnectionConnectingImpl implements ConnectionConnecting {
 abstract class ConnectionConnecting implements ConnectionState {
   const factory ConnectionConnecting(
       {required final String hubHost,
-      required final int hubPort}) = _$ConnectionConnectingImpl;
+      required final int hubPort,
+      required final String username}) = _$ConnectionConnectingImpl;
 
   String get hubHost;
   int get hubPort;
+  String get username;
 
   /// Create a copy of ConnectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -2712,7 +2749,8 @@ class _$ConnectionSelectingRoomImpl implements ConnectionSelectingRoom {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
-    required TResult Function(String hubHost, int hubPort) connecting,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connecting,
     required TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)
         selectingRoom,
@@ -2736,7 +2774,7 @@ class _$ConnectionSelectingRoomImpl implements ConnectionSelectingRoom {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? idle,
-    TResult? Function(String hubHost, int hubPort)? connecting,
+    TResult? Function(String hubHost, int hubPort, String username)? connecting,
     TResult? Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -2760,7 +2798,7 @@ class _$ConnectionSelectingRoomImpl implements ConnectionSelectingRoom {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
-    TResult Function(String hubHost, int hubPort)? connecting,
+    TResult Function(String hubHost, int hubPort, String username)? connecting,
     TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -2948,7 +2986,8 @@ class _$ConnectionJoiningImpl implements ConnectionJoining {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
-    required TResult Function(String hubHost, int hubPort) connecting,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connecting,
     required TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)
         selectingRoom,
@@ -2972,7 +3011,7 @@ class _$ConnectionJoiningImpl implements ConnectionJoining {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? idle,
-    TResult? Function(String hubHost, int hubPort)? connecting,
+    TResult? Function(String hubHost, int hubPort, String username)? connecting,
     TResult? Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -2996,7 +3035,7 @@ class _$ConnectionJoiningImpl implements ConnectionJoining {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
-    TResult Function(String hubHost, int hubPort)? connecting,
+    TResult Function(String hubHost, int hubPort, String username)? connecting,
     TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -3220,7 +3259,8 @@ class _$ConnectionInSessionImpl implements ConnectionInSession {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
-    required TResult Function(String hubHost, int hubPort) connecting,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connecting,
     required TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)
         selectingRoom,
@@ -3245,7 +3285,7 @@ class _$ConnectionInSessionImpl implements ConnectionInSession {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? idle,
-    TResult? Function(String hubHost, int hubPort)? connecting,
+    TResult? Function(String hubHost, int hubPort, String username)? connecting,
     TResult? Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -3270,7 +3310,7 @@ class _$ConnectionInSessionImpl implements ConnectionInSession {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
-    TResult Function(String hubHost, int hubPort)? connecting,
+    TResult Function(String hubHost, int hubPort, String username)? connecting,
     TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -3435,7 +3475,8 @@ class _$ConnectionFailedImpl implements ConnectionFailed {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
-    required TResult Function(String hubHost, int hubPort) connecting,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connecting,
     required TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)
         selectingRoom,
@@ -3459,7 +3500,7 @@ class _$ConnectionFailedImpl implements ConnectionFailed {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? idle,
-    TResult? Function(String hubHost, int hubPort)? connecting,
+    TResult? Function(String hubHost, int hubPort, String username)? connecting,
     TResult? Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,
@@ -3483,7 +3524,7 @@ class _$ConnectionFailedImpl implements ConnectionFailed {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
-    TResult Function(String hubHost, int hubPort)? connecting,
+    TResult Function(String hubHost, int hubPort, String username)? connecting,
     TResult Function(
             String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
         selectingRoom,

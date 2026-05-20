@@ -638,10 +638,12 @@ class _AudioSettingsCardState extends State<_AudioSettingsCard> {
   List<AudioDeviceInfo> _outputDevices = [];
   List<AudioSessionInfo> _sessions = [];
   bool _loading = false;
+  double _captureGain = 1.0; // 1.0 = 100 %
 
   @override
   void initState() {
     super.initState();
+    _captureGain = widget.audio.captureGain;
     _fetchDevices();
   }
 
@@ -760,6 +762,73 @@ class _AudioSettingsCardState extends State<_AudioSettingsCard> {
                 builder: (context, rms, _) => _VuMeter(rms: rms),
               ),
             ),
+          ],
+        ),
+
+        const SizedBox(height: 12),
+
+        // Capture Gain
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Capture Gain',
+                style: tt.labelMedium?.copyWith(color: kColorTextMuted)),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                color: _captureGain > 1.0
+                    ? kColorPrimary.withAlpha(30)
+                    : kColorCard,
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(
+                  color: _captureGain > 1.0
+                      ? kColorPrimary.withAlpha(120)
+                      : kColorBorder,
+                ),
+              ),
+              child: Text(
+                '${(_captureGain * 100).round()} %',
+                style: tt.labelMedium?.copyWith(
+                  fontFamily: 'monospace',
+                  color: _captureGain > 1.0 ? kColorPrimary : kColorText,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
+        ),
+        SliderTheme(
+          data: SliderTheme.of(context).copyWith(
+            trackHeight: 3,
+            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
+            overlayShape: const RoundSliderOverlayShape(overlayRadius: 14),
+            activeTrackColor: _captureGain > 1.0
+                ? kColorPrimary
+                : kColorPrimary.withAlpha(160),
+            inactiveTrackColor: kColorBorder,
+            thumbColor: kColorPrimary,
+            overlayColor: kColorPrimary.withAlpha(30),
+          ),
+          child: Slider(
+            value: _captureGain,
+            min: 0.0,
+            max: 5.0,
+            divisions: 100, // steps of 5 %
+            onChanged: (v) {
+              setState(() => _captureGain = v);
+              widget.audio.captureGain = v;
+            },
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('0 %',
+                style: tt.labelSmall?.copyWith(color: kColorTextMuted)),
+            Text('250 %',
+                style: tt.labelSmall?.copyWith(color: kColorTextMuted)),
+            Text('500 %',
+                style: tt.labelSmall?.copyWith(color: kColorTextMuted)),
           ],
         ),
 
