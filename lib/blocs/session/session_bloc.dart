@@ -35,6 +35,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     on<SessionPeerMetricsUpdated>(_onPeerMetricsUpdated);
     on<SessionProximityParamsChanged>(_onProximityParamsChanged);
     on<SessionPeerMuteToggled>(_onPeerMuteToggled);
+    on<SessionPeerVolumeChanged>(_onPeerVolumeChanged);
     on<SessionEnded>(_onEnded);
   }
 
@@ -135,7 +136,8 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
         selfSpeed:  current.selfSpeed,
       );
 
-      _audioEngine.setGains(entry.key, gL, gR);
+      final vm = peer.volumeMultiplier.clamp(0.0, 4.0);
+      _audioEngine.setGains(entry.key, gL * vm, gR * vm, dopplerFactor: doppler);
 
       add(SessionEvent.peerMetricsUpdated(
         id:           entry.key,
@@ -184,6 +186,17 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     if (peer == null) return;
     final updated = Map<int, PeerModel>.from(current.peers)
       ..[event.id] = peer.copyWith(muted: !peer.muted);
+    emit(current.copyWith(peers: updated));
+  }
+
+  void _onPeerVolumeChanged(
+      SessionPeerVolumeChanged event, Emitter<SessionState> emit) {
+    final current = state;
+    if (current is! SessionActive) return;
+    final peer = current.peers[event.id];
+    if (peer == null) return;
+    final updated = Map<int, PeerModel>.from(current.peers)
+      ..[event.id] = peer.copyWith(volumeMultiplier: event.multiplier.clamp(0.0, 4.0));
     emit(current.copyWith(peers: updated));
   }
 

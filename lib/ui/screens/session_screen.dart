@@ -13,6 +13,7 @@ import '../../models/setup_config.dart';
 import '../theme.dart';
 import '../widgets/peer_table.dart';
 import '../widgets/proximity_form.dart';
+import '../widgets/radar_map.dart';
 
 /// The live session screen — shows peer table, proximity controls,
 /// telemetry status, and connection info.
@@ -99,42 +100,76 @@ class _SessionScreenState extends State<SessionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ConnectionBloc, ConnectionState>(
-      builder: (context, connState) {
-        final sessionCode = connState is ConnectionInSession
-            ? connState.roomCode
-            : '----';
-        final selfName = connState is ConnectionInSession
-            ? connState.username
-            : '';
-
-        return Scaffold(
-          backgroundColor: kColorBg,
-          body: Column(children: [
-            _SessionHeader(
-              roomCode: sessionCode,
-              username: selfName,
-              onLeave:  () => _leave(context),
-            ),
-            Expanded(
-              child: Row(children: [
-                // Left sidebar: telemetry + proximity + local test
-                SizedBox(
-                  width: 340,
-                  child: _LeftPanel(
-                    runner:         _runner,
-                    testController: _testController,
-                    audio:          _audio,
-                  ),
-                ),
-                const VerticalDivider(width: 1),
-                // Right: peer table
-                const Expanded(child: _PeerPanel()),
-              ]),
-            ),
-          ]),
-        );
+    return BlocListener<ConnectionBloc, ConnectionState>(
+      listener: (context, connState) {
+        final messenger = ScaffoldMessenger.of(context);
+        if (connState is ConnectionReconnecting) {
+          messenger.showSnackBar(SnackBar(
+            duration:        const Duration(days: 1), // dismissed manually
+            backgroundColor: kColorCard,
+            content: Row(children: [
+              const SizedBox(
+                width: 16, height: 16,
+                child: CircularProgressIndicator(
+                    strokeWidth: 2, color: kColorPrimary),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Connection lost — reconnecting… '
+                '(attempt ${connState.attempt + 1})',
+                style: const TextStyle(color: kColorText),
+              ),
+            ]),
+          ));
+        } else if (connState is ConnectionInSession) {
+          // Reconnect succeeded — clear snackbar
+          messenger.clearSnackBars();
+        } else if (connState is ConnectionFailed) {
+          messenger.clearSnackBars();
+          _leave(context);
+        }
       },
+      child: BlocBuilder<ConnectionBloc, ConnectionState>(
+        builder: (context, connState) {
+          final sessionCode = connState is ConnectionInSession
+              ? connState.roomCode
+              : connState is ConnectionReconnecting
+                  ? connState.roomCode
+                  : '----';
+          final selfName = connState is ConnectionInSession
+              ? connState.username
+              : connState is ConnectionReconnecting
+                  ? connState.username
+                  : '';
+
+          return Scaffold(
+            backgroundColor: kColorBg,
+            body: Column(children: [
+              _SessionHeader(
+                roomCode: sessionCode,
+                username: selfName,
+                onLeave:  () => _leave(context),
+              ),
+              Expanded(
+                child: Row(children: [
+                  // Left sidebar: telemetry + proximity + local test
+                  SizedBox(
+                    width: 340,
+                    child: _LeftPanel(
+                      runner:         _runner,
+                      testController: _testController,
+                      audio:          _audio,
+                    ),
+                  ),
+                  const VerticalDivider(width: 1),
+                  // Right: peer table
+                  const Expanded(child: _PeerPanel()),
+                ]),
+              ),
+            ]),
+          );
+        },
+      ),
     );
   }
 }
@@ -224,6 +259,13 @@ class _LeftPanel extends StatelessWidget {
               _AudioSettingsCard(runner: runner!, audio: audio!),
               const SizedBox(height: 16),
             ],
+
+            // Radar mini-map
+            const _InfoCard(
+              title: 'Radar',
+              child: Center(child: RadarMap(size: 260)),
+            ),
+            const SizedBox(height: 16),
 
             // Telemetry status
             _InfoCard(
@@ -610,6 +652,9 @@ class _PeerPanel extends StatelessWidget {
                       onMuteToggle: (id) => context
                           .read<SessionBloc>()
                           .add(SessionEvent.peerMuteToggled(id: id)),
+                      onVolumeChanged: (id, v) => context
+                          .read<SessionBloc>()
+                          .add(SessionEvent.peerVolumeChanged(id: id, multiplier: v)),
                     )
                   : const Center(
                       child: CircularProgressIndicator(color: kColorPrimary)),

@@ -44,4 +44,7 @@ class ConnectionEvent with _$ConnectionEvent {
   const factory ConnectionEvent.peerLeft({
     required int id,
   }) = ConnectionPeerLeft;
+
+  /// Internal — fired by the backoff timer to attempt a reconnect.
+  const factory ConnectionEvent.reconnect() = ConnectionReconnect;
 }

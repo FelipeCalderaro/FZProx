@@ -37,6 +37,15 @@ class ConnectionState with _$ConnectionState {
     @Default([]) List<({int id, String name})> existingPeers,
   }) = ConnectionInSession;
 
+  /// Connection lost mid-session; retrying with exponential backoff.
+  const factory ConnectionState.reconnecting({
+    required String hubHost,
+    required int    hubPort,
+    required String username,
+    required String roomCode,
+    @Default(0) int attempt,
+  }) = ConnectionReconnecting;
+
   const factory ConnectionState.failed({
     required String message,
   }) = ConnectionFailed;

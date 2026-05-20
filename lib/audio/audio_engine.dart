@@ -176,9 +176,12 @@ class AudioEngine {
     return frame;
   }
 
-  /// Sets the per-peer stereo gains (called by the gain loop).
-  void setGains(int peerId, double gainL, double gainR) {
-    _peers[peerId]?.setGains(gainL, gainR);
+  /// Sets the per-peer stereo gains and current Doppler factor (called by the gain loop).
+  void setGains(int peerId, double gainL, double gainR, {double dopplerFactor = 1.0}) {
+    final p = _peers[peerId];
+    if (p == null) return;
+    p.setGains(gainL, gainR);
+    p.dopplerFactor = dopplerFactor;
   }
 
   /// Enqueues a received peer audio frame (after Doppler has been applied).
@@ -206,14 +209,14 @@ class AudioEngine {
     final left  = Float64List(kFrameSamples);
     final right = Float64List(kFrameSamples);
 
-    // Mix all peer buffers
+    // Mix all peer buffers (with per-peer Doppler reverb tail)
     for (final peer in _peers.values) {
       final frame = peer.get();
       if (frame == null) continue;
+      final (:mono) = peer.processFrame(frame, peer.dopplerFactor);
       for (var i = 0; i < kFrameSamples; i++) {
-        final s = frame[i] / 32768.0;
-        left[i]  += s * peer.gainL;
-        right[i] += s * peer.gainR;
+        left[i]  += mono[i] * peer.gainL;
+        right[i] += mono[i] * peer.gainR;
       }
     }
 

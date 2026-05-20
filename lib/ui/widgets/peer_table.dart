@@ -8,9 +8,15 @@ import 'volume_bar.dart';
 /// Sorted nearest-first.
 class PeerTable extends StatelessWidget {
   final Map<int, PeerModel> peers;
-  final void Function(int peerId)? onMuteToggle;
+  final void Function(int peerId)?               onMuteToggle;
+  final void Function(int peerId, double value)? onVolumeChanged;
 
-  const PeerTable({super.key, required this.peers, this.onMuteToggle});
+  const PeerTable({
+    super.key,
+    required this.peers,
+    this.onMuteToggle,
+    this.onVolumeChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,11 @@ class PeerTable extends StatelessWidget {
       children: [
         _Header(),
         const Divider(height: 1),
-        ...sorted.map((p) => _PeerRow(peer: p, onMuteToggle: onMuteToggle)),
+        ...sorted.map((p) => _PeerRow(
+              peer:           p,
+              onMuteToggle:   onMuteToggle,
+              onVolumeChanged: onVolumeChanged,
+            )),
       ],
     );
   }
@@ -71,9 +81,14 @@ class _Header extends StatelessWidget {
 
 class _PeerRow extends StatelessWidget {
   final PeerModel peer;
-  final void Function(int peerId)? onMuteToggle;
+  final void Function(int peerId)?               onMuteToggle;
+  final void Function(int peerId, double value)? onVolumeChanged;
 
-  const _PeerRow({required this.peer, this.onMuteToggle});
+  const _PeerRow({
+    required this.peer,
+    this.onMuteToggle,
+    this.onVolumeChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -83,13 +98,19 @@ class _PeerRow extends StatelessWidget {
     final gain = peer.rawGain.clamp(0.0, 1.0);
     final mono = '${(gain * 100).toStringAsFixed(0)}%'.padLeft(4);
 
+    final vm = peer.volumeMultiplier;
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       decoration: BoxDecoration(
         color: peer.muted ? kColorCard.withAlpha(180) : null,
         border: Border(bottom: BorderSide(color: kColorBorder.withAlpha(80))),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // ── Main data row ──────────────────────────────────────────────
+          Row(
         children: [
           // Player name
           Expanded(
@@ -196,7 +217,60 @@ class _PeerRow extends StatelessWidget {
           ),
         ],
       ),
-    );
+
+      // ── Per-peer volume slider ─────────────────────────────────────────
+      if (onVolumeChanged != null)
+        Padding(
+          padding: const EdgeInsets.only(top: 2, bottom: 4),
+          child: Row(children: [
+            Icon(
+              vm < 0.05
+                  ? Icons.volume_off_outlined
+                  : vm > 1.05
+                      ? Icons.volume_up_rounded
+                      : Icons.volume_down_rounded,
+              size:  14,
+              color: vm > 1.05 ? kColorPrimary : kColorTextMuted,
+            ),
+            const SizedBox(width: 6),
+            Expanded(
+              child: SliderTheme(
+                data: const SliderThemeData(
+                  trackHeight:  2,
+                  thumbShape:   RoundSliderThumbShape(enabledThumbRadius: 5),
+                  overlayShape: RoundSliderOverlayShape(overlayRadius: 10),
+                  inactiveTrackColor: kColorBorder,
+                  overlayColor: Color(0x19FF6B00),
+                ).copyWith(
+                  activeTrackColor: vm > 1.05 ? kColorPrimary : kColorSecondary,
+                  thumbColor:       vm > 1.05 ? kColorPrimary : kColorSecondary,
+                ),
+                child: Slider(
+                  value:     vm.clamp(0.0, 2.0),
+                  min:       0.0,
+                  max:       2.0,
+                  divisions: 40,
+                  onChanged: (v) => onVolumeChanged!(peer.id, v),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 38,
+              child: Text(
+                '${(vm * 100).round()}%',
+                style: tt.labelSmall?.copyWith(
+                  fontFamily:  'monospace',
+                  color: vm > 1.05 ? kColorPrimary : kColorTextMuted,
+                  fontWeight:  vm > 1.05 ? FontWeight.w700 : FontWeight.normal,
+                ),
+                textAlign: TextAlign.right,
+              ),
+            ),
+          ]),
+        ),
+        ],   // Column children
+      ),     // Column
+    );       // Container
   }
 
   Color _dopplerColor(double f) {

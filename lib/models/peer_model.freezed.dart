@@ -33,7 +33,9 @@ mixin _$PeerModel {
   double get dopplerFactor => throw _privateConstructorUsedError;
   int get bufferMs =>
       throw _privateConstructorUsedError; // Manual mute — silences this peer regardless of proximity
-  bool get muted => throw _privateConstructorUsedError;
+  bool get muted =>
+      throw _privateConstructorUsedError; // Per-peer volume multiplier (0.0 = silent, 1.0 = normal, 2.0 = double, etc.)
+  double get volumeMultiplier => throw _privateConstructorUsedError;
 
   /// Create a copy of PeerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -61,7 +63,8 @@ abstract class $PeerModelCopyWith<$Res> {
       double pan,
       double dopplerFactor,
       int bufferMs,
-      bool muted});
+      bool muted,
+      double volumeMultiplier});
 }
 
 /// @nodoc
@@ -93,6 +96,7 @@ class _$PeerModelCopyWithImpl<$Res, $Val extends PeerModel>
     Object? dopplerFactor = null,
     Object? bufferMs = null,
     Object? muted = null,
+    Object? volumeMultiplier = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -151,6 +155,10 @@ class _$PeerModelCopyWithImpl<$Res, $Val extends PeerModel>
           ? _value.muted
           : muted // ignore: cast_nullable_to_non_nullable
               as bool,
+      volumeMultiplier: null == volumeMultiplier
+          ? _value.volumeMultiplier
+          : volumeMultiplier // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -177,7 +185,8 @@ abstract class _$$PeerModelImplCopyWith<$Res>
       double pan,
       double dopplerFactor,
       int bufferMs,
-      bool muted});
+      bool muted,
+      double volumeMultiplier});
 }
 
 /// @nodoc
@@ -207,6 +216,7 @@ class __$$PeerModelImplCopyWithImpl<$Res>
     Object? dopplerFactor = null,
     Object? bufferMs = null,
     Object? muted = null,
+    Object? volumeMultiplier = null,
   }) {
     return _then(_$PeerModelImpl(
       id: null == id
@@ -265,6 +275,10 @@ class __$$PeerModelImplCopyWithImpl<$Res>
           ? _value.muted
           : muted // ignore: cast_nullable_to_non_nullable
               as bool,
+      volumeMultiplier: null == volumeMultiplier
+          ? _value.volumeMultiplier
+          : volumeMultiplier // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -286,7 +300,8 @@ class _$PeerModelImpl implements _PeerModel {
       this.pan = 0.0,
       this.dopplerFactor = 1.0,
       this.bufferMs = 0,
-      this.muted = false});
+      this.muted = false,
+      this.volumeMultiplier = 1.0});
 
   @override
   final int id;
@@ -333,10 +348,14 @@ class _$PeerModelImpl implements _PeerModel {
   @override
   @JsonKey()
   final bool muted;
+// Per-peer volume multiplier (0.0 = silent, 1.0 = normal, 2.0 = double, etc.)
+  @override
+  @JsonKey()
+  final double volumeMultiplier;
 
   @override
   String toString() {
-    return 'PeerModel(id: $id, name: $name, x: $x, z: $z, yaw: $yaw, speed: $speed, distanceM: $distanceM, gainL: $gainL, gainR: $gainR, rawGain: $rawGain, pan: $pan, dopplerFactor: $dopplerFactor, bufferMs: $bufferMs, muted: $muted)';
+    return 'PeerModel(id: $id, name: $name, x: $x, z: $z, yaw: $yaw, speed: $speed, distanceM: $distanceM, gainL: $gainL, gainR: $gainR, rawGain: $rawGain, pan: $pan, dopplerFactor: $dopplerFactor, bufferMs: $bufferMs, muted: $muted, volumeMultiplier: $volumeMultiplier)';
   }
 
   @override
@@ -360,12 +379,29 @@ class _$PeerModelImpl implements _PeerModel {
                 other.dopplerFactor == dopplerFactor) &&
             (identical(other.bufferMs, bufferMs) ||
                 other.bufferMs == bufferMs) &&
-            (identical(other.muted, muted) || other.muted == muted));
+            (identical(other.muted, muted) || other.muted == muted) &&
+            (identical(other.volumeMultiplier, volumeMultiplier) ||
+                other.volumeMultiplier == volumeMultiplier));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, x, z, yaw, speed,
-      distanceM, gainL, gainR, rawGain, pan, dopplerFactor, bufferMs, muted);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      x,
+      z,
+      yaw,
+      speed,
+      distanceM,
+      gainL,
+      gainR,
+      rawGain,
+      pan,
+      dopplerFactor,
+      bufferMs,
+      muted,
+      volumeMultiplier);
 
   /// Create a copy of PeerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -391,7 +427,8 @@ abstract class _PeerModel implements PeerModel {
       final double pan,
       final double dopplerFactor,
       final int bufferMs,
-      final bool muted}) = _$PeerModelImpl;
+      final bool muted,
+      final double volumeMultiplier}) = _$PeerModelImpl;
 
   @override
   int get id;
@@ -420,7 +457,10 @@ abstract class _PeerModel implements PeerModel {
   @override
   int get bufferMs; // Manual mute — silences this peer regardless of proximity
   @override
-  bool get muted;
+  bool
+      get muted; // Per-peer volume multiplier (0.0 = silent, 1.0 = normal, 2.0 = double, etc.)
+  @override
+  double get volumeMultiplier;
 
   /// Create a copy of PeerModel
   /// with the given fields replaced by the non-null parameter values.

@@ -63,6 +63,8 @@ class _RoomBody extends StatelessWidget {
       ConnectionSelectingRoom(rooms: final rooms, username: final username) =>
           _RoomPicker(rooms: rooms, username: username),
       ConnectionJoining()     => _loadingView('Joining room…'),
+      ConnectionReconnecting(attempt: final attempt) =>
+          _loadingView('Reconnecting… (attempt ${attempt + 1})'),
       ConnectionFailed(message: final msg) => _errorView(context, msg),
       _                       => _loadingView('…'),
     };

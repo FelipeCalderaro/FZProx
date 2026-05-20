@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -16,6 +15,9 @@ part 'connection_state.dart';
 class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
   HorizonClient?              _client;
   StreamSubscription<HubMessage>? _msgSub;
+  Timer?                      _reconnectTimer;
+
+  static const _kMaxAttempts = 5;
 
   ConnectionBloc() : super(const ConnectionState.idle()) {
     on<ConnectionConnect>(_onConnect);
@@ -28,6 +30,7 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
     on<ConnectionErrorReceived>(_onErrorReceived);
     on<ConnectionPeerJoined>(_onPeerJoined);
     on<ConnectionPeerLeft>(_onPeerLeft);
+    on<ConnectionReconnect>(_onReconnect);
   }
 
   Future<void> _onConnect(
@@ -115,6 +118,8 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
 
   Future<void> _onDisconnect(
       ConnectionDisconnect event, Emitter<ConnectionState> emit) async {
+    _reconnectTimer?.cancel();
+    _reconnectTimer = null;
     await _msgSub?.cancel();
     _msgSub = null;
     await _client?.disconnect();
@@ -164,7 +169,130 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
 
   void _onErrorReceived(
       ConnectionErrorReceived event, Emitter<ConnectionState> emit) {
-    emit(ConnectionState.failed(message: event.message));
+    // If we were in-session or joining, attempt auto-reconnect with backoff.
+    final current = state;
+    String? hubHost, username, roomCode;
+    int? hubPort;
+
+    if (current is ConnectionInSession) {
+      hubHost  = current.hubHost;
+      hubPort  = current.hubPort;
+      username = current.username;
+      roomCode = current.roomCode;
+    } else if (current is ConnectionJoining) {
+      hubHost  = current.hubHost;
+      hubPort  = current.hubPort;
+      username = current.username;
+      roomCode = current.roomCode;
+    } else if (current is ConnectionReconnecting &&
+        current.attempt < _kMaxAttempts) {
+      hubHost  = current.hubHost;
+      hubPort  = current.hubPort;
+      username = current.username;
+      roomCode = current.roomCode;
+    }
+
+    if (hubHost != null) {
+      final attempt = current is ConnectionReconnecting ? current.attempt : 0;
+      if (attempt >= _kMaxAttempts) {
+        emit(ConnectionState.failed(
+            message: 'Reconnect failed after $_kMaxAttempts attempts.'));
+        return;
+      }
+      final delaySec = 1 << attempt; // 1, 2, 4, 8, 16 s
+      emit(ConnectionState.reconnecting(
+        hubHost:  hubHost,
+        hubPort:  hubPort!,
+        username: username!,
+        roomCode: roomCode!,
+        attempt:  attempt,
+      ));
+      _reconnectTimer?.cancel();
+      _reconnectTimer = Timer(
+        Duration(seconds: delaySec),
+        () => add(const ConnectionEvent.reconnect()),
+      );
+    } else {
+      emit(ConnectionState.failed(message: event.message));
+    }
+  }
+
+  Future<void> _onReconnect(
+      ConnectionReconnect event, Emitter<ConnectionState> emit) async {
+    final current = state;
+    if (current is! ConnectionReconnecting) return;
+
+    // Tear down existing client
+    await _msgSub?.cancel();
+    _msgSub = null;
+    await _client?.disconnect();
+    _client = null;
+
+    final nextAttempt = current.attempt + 1;
+
+    try {
+      emit(ConnectionState.connecting(
+        hubHost:  current.hubHost,
+        hubPort:  current.hubPort,
+        username: current.username,
+      ));
+      _client = HorizonClient(host: current.hubHost, port: current.hubPort);
+      await _client!.connect();
+
+      _msgSub = _client!.messages.listen((msg) {
+        switch (msg.type) {
+          case kH2cRoomList:
+            // Re-joining: skip room list, send HELLO directly.
+            break;
+          case kH2cWelcome:
+            final w = parseWelcome(msg.payload);
+            add(ConnectionEvent.welcomeReceived(
+              selfId:   w.selfId,
+              roomCode: w.code,
+              peers:    w.peers,
+            ));
+          case kH2cError:
+            add(ConnectionEvent.errorReceived(
+              message: utf8.decode(msg.payload, allowMalformed: true),
+            ));
+          case kH2cPeerJoined:
+            final p = parsePeerJoined(msg.payload);
+            add(ConnectionEvent.peerJoined(id: p.id, name: p.name));
+          case kH2cPeerLeft:
+            if (msg.payload.isNotEmpty) {
+              add(ConnectionEvent.peerLeft(id: msg.payload[0]));
+            }
+        }
+      }, onError: (e) {
+        add(ConnectionEvent.errorReceived(message: 'Hub connection lost: $e'));
+      });
+
+      // Re-join the same room
+      await _client!.sendHello(current.roomCode, current.username);
+    } on SocketException catch (e) {
+      // Schedule next backoff attempt via errorReceived
+      emit(ConnectionState.reconnecting(
+        hubHost:  current.hubHost,
+        hubPort:  current.hubPort,
+        username: current.username,
+        roomCode: current.roomCode,
+        attempt:  nextAttempt,
+      ));
+      if (nextAttempt >= _kMaxAttempts) {
+        emit(ConnectionState.failed(
+            message:
+                'Cannot reach hub after $_kMaxAttempts attempts — $e'));
+      } else {
+        final delaySec = 1 << nextAttempt;
+        _reconnectTimer?.cancel();
+        _reconnectTimer = Timer(
+          Duration(seconds: delaySec),
+          () => add(const ConnectionEvent.reconnect()),
+        );
+      }
+    } catch (e) {
+      emit(ConnectionState.failed(message: 'Reconnect error: $e'));
+    }
   }
 
   void _onPeerJoined(
@@ -181,6 +309,7 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectionState> {
 
   @override
   Future<void> close() async {
+    _reconnectTimer?.cancel();
     await _msgSub?.cancel();
     await _client?.disconnect();
     return super.close();

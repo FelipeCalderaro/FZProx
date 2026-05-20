@@ -31,6 +31,7 @@ mixin _$ConnectionEvent {
     required TResult Function(String message) errorReceived,
     required TResult Function(int id, String name) peerJoined,
     required TResult Function(int id) peerLeft,
+    required TResult Function() reconnect,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,6 +48,7 @@ mixin _$ConnectionEvent {
     TResult? Function(String message)? errorReceived,
     TResult? Function(int id, String name)? peerJoined,
     TResult? Function(int id)? peerLeft,
+    TResult? Function()? reconnect,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +65,7 @@ mixin _$ConnectionEvent {
     TResult Function(String message)? errorReceived,
     TResult Function(int id, String name)? peerJoined,
     TResult Function(int id)? peerLeft,
+    TResult Function()? reconnect,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -79,6 +82,7 @@ mixin _$ConnectionEvent {
     required TResult Function(ConnectionErrorReceived value) errorReceived,
     required TResult Function(ConnectionPeerJoined value) peerJoined,
     required TResult Function(ConnectionPeerLeft value) peerLeft,
+    required TResult Function(ConnectionReconnect value) reconnect,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -93,6 +97,7 @@ mixin _$ConnectionEvent {
     TResult? Function(ConnectionErrorReceived value)? errorReceived,
     TResult? Function(ConnectionPeerJoined value)? peerJoined,
     TResult? Function(ConnectionPeerLeft value)? peerLeft,
+    TResult? Function(ConnectionReconnect value)? reconnect,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -107,6 +112,7 @@ mixin _$ConnectionEvent {
     TResult Function(ConnectionErrorReceived value)? errorReceived,
     TResult Function(ConnectionPeerJoined value)? peerJoined,
     TResult Function(ConnectionPeerLeft value)? peerLeft,
+    TResult Function(ConnectionReconnect value)? reconnect,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -233,6 +239,7 @@ class _$ConnectionConnectImpl implements ConnectionConnect {
     required TResult Function(String message) errorReceived,
     required TResult Function(int id, String name) peerJoined,
     required TResult Function(int id) peerLeft,
+    required TResult Function() reconnect,
   }) {
     return connect(hubHost, hubPort, username);
   }
@@ -252,6 +259,7 @@ class _$ConnectionConnectImpl implements ConnectionConnect {
     TResult? Function(String message)? errorReceived,
     TResult? Function(int id, String name)? peerJoined,
     TResult? Function(int id)? peerLeft,
+    TResult? Function()? reconnect,
   }) {
     return connect?.call(hubHost, hubPort, username);
   }
@@ -271,6 +279,7 @@ class _$ConnectionConnectImpl implements ConnectionConnect {
     TResult Function(String message)? errorReceived,
     TResult Function(int id, String name)? peerJoined,
     TResult Function(int id)? peerLeft,
+    TResult Function()? reconnect,
     required TResult orElse(),
   }) {
     if (connect != null) {
@@ -293,6 +302,7 @@ class _$ConnectionConnectImpl implements ConnectionConnect {
     required TResult Function(ConnectionErrorReceived value) errorReceived,
     required TResult Function(ConnectionPeerJoined value) peerJoined,
     required TResult Function(ConnectionPeerLeft value) peerLeft,
+    required TResult Function(ConnectionReconnect value) reconnect,
   }) {
     return connect(this);
   }
@@ -310,6 +320,7 @@ class _$ConnectionConnectImpl implements ConnectionConnect {
     TResult? Function(ConnectionErrorReceived value)? errorReceived,
     TResult? Function(ConnectionPeerJoined value)? peerJoined,
     TResult? Function(ConnectionPeerLeft value)? peerLeft,
+    TResult? Function(ConnectionReconnect value)? reconnect,
   }) {
     return connect?.call(this);
   }
@@ -327,6 +338,7 @@ class _$ConnectionConnectImpl implements ConnectionConnect {
     TResult Function(ConnectionErrorReceived value)? errorReceived,
     TResult Function(ConnectionPeerJoined value)? peerJoined,
     TResult Function(ConnectionPeerLeft value)? peerLeft,
+    TResult Function(ConnectionReconnect value)? reconnect,
     required TResult orElse(),
   }) {
     if (connect != null) {
@@ -408,6 +420,7 @@ class _$ConnectionListRoomsImpl implements ConnectionListRooms {
     required TResult Function(String message) errorReceived,
     required TResult Function(int id, String name) peerJoined,
     required TResult Function(int id) peerLeft,
+    required TResult Function() reconnect,
   }) {
     return listRooms();
   }
@@ -427,6 +440,7 @@ class _$ConnectionListRoomsImpl implements ConnectionListRooms {
     TResult? Function(String message)? errorReceived,
     TResult? Function(int id, String name)? peerJoined,
     TResult? Function(int id)? peerLeft,
+    TResult? Function()? reconnect,
   }) {
     return listRooms?.call();
   }
@@ -446,6 +460,7 @@ class _$ConnectionListRoomsImpl implements ConnectionListRooms {
     TResult Function(String message)? errorReceived,
     TResult Function(int id, String name)? peerJoined,
     TResult Function(int id)? peerLeft,
+    TResult Function()? reconnect,
     required TResult orElse(),
   }) {
     if (listRooms != null) {
@@ -468,6 +483,7 @@ class _$ConnectionListRoomsImpl implements ConnectionListRooms {
     required TResult Function(ConnectionErrorReceived value) errorReceived,
     required TResult Function(ConnectionPeerJoined value) peerJoined,
     required TResult Function(ConnectionPeerLeft value) peerLeft,
+    required TResult Function(ConnectionReconnect value) reconnect,
   }) {
     return listRooms(this);
   }
@@ -485,6 +501,7 @@ class _$ConnectionListRoomsImpl implements ConnectionListRooms {
     TResult? Function(ConnectionErrorReceived value)? errorReceived,
     TResult? Function(ConnectionPeerJoined value)? peerJoined,
     TResult? Function(ConnectionPeerLeft value)? peerLeft,
+    TResult? Function(ConnectionReconnect value)? reconnect,
   }) {
     return listRooms?.call(this);
   }
@@ -502,6 +519,7 @@ class _$ConnectionListRoomsImpl implements ConnectionListRooms {
     TResult Function(ConnectionErrorReceived value)? errorReceived,
     TResult Function(ConnectionPeerJoined value)? peerJoined,
     TResult Function(ConnectionPeerLeft value)? peerLeft,
+    TResult Function(ConnectionReconnect value)? reconnect,
     required TResult orElse(),
   }) {
     if (listRooms != null) {
@@ -606,6 +624,7 @@ class _$ConnectionJoinRoomImpl implements ConnectionJoinRoom {
     required TResult Function(String message) errorReceived,
     required TResult Function(int id, String name) peerJoined,
     required TResult Function(int id) peerLeft,
+    required TResult Function() reconnect,
   }) {
     return joinRoom(code, username);
   }
@@ -625,6 +644,7 @@ class _$ConnectionJoinRoomImpl implements ConnectionJoinRoom {
     TResult? Function(String message)? errorReceived,
     TResult? Function(int id, String name)? peerJoined,
     TResult? Function(int id)? peerLeft,
+    TResult? Function()? reconnect,
   }) {
     return joinRoom?.call(code, username);
   }
@@ -644,6 +664,7 @@ class _$ConnectionJoinRoomImpl implements ConnectionJoinRoom {
     TResult Function(String message)? errorReceived,
     TResult Function(int id, String name)? peerJoined,
     TResult Function(int id)? peerLeft,
+    TResult Function()? reconnect,
     required TResult orElse(),
   }) {
     if (joinRoom != null) {
@@ -666,6 +687,7 @@ class _$ConnectionJoinRoomImpl implements ConnectionJoinRoom {
     required TResult Function(ConnectionErrorReceived value) errorReceived,
     required TResult Function(ConnectionPeerJoined value) peerJoined,
     required TResult Function(ConnectionPeerLeft value) peerLeft,
+    required TResult Function(ConnectionReconnect value) reconnect,
   }) {
     return joinRoom(this);
   }
@@ -683,6 +705,7 @@ class _$ConnectionJoinRoomImpl implements ConnectionJoinRoom {
     TResult? Function(ConnectionErrorReceived value)? errorReceived,
     TResult? Function(ConnectionPeerJoined value)? peerJoined,
     TResult? Function(ConnectionPeerLeft value)? peerLeft,
+    TResult? Function(ConnectionReconnect value)? reconnect,
   }) {
     return joinRoom?.call(this);
   }
@@ -700,6 +723,7 @@ class _$ConnectionJoinRoomImpl implements ConnectionJoinRoom {
     TResult Function(ConnectionErrorReceived value)? errorReceived,
     TResult Function(ConnectionPeerJoined value)? peerJoined,
     TResult Function(ConnectionPeerLeft value)? peerLeft,
+    TResult Function(ConnectionReconnect value)? reconnect,
     required TResult orElse(),
   }) {
     if (joinRoom != null) {
@@ -808,6 +832,7 @@ class _$ConnectionCreateRoomImpl implements ConnectionCreateRoom {
     required TResult Function(String message) errorReceived,
     required TResult Function(int id, String name) peerJoined,
     required TResult Function(int id) peerLeft,
+    required TResult Function() reconnect,
   }) {
     return createRoom(username);
   }
@@ -827,6 +852,7 @@ class _$ConnectionCreateRoomImpl implements ConnectionCreateRoom {
     TResult? Function(String message)? errorReceived,
     TResult? Function(int id, String name)? peerJoined,
     TResult? Function(int id)? peerLeft,
+    TResult? Function()? reconnect,
   }) {
     return createRoom?.call(username);
   }
@@ -846,6 +872,7 @@ class _$ConnectionCreateRoomImpl implements ConnectionCreateRoom {
     TResult Function(String message)? errorReceived,
     TResult Function(int id, String name)? peerJoined,
     TResult Function(int id)? peerLeft,
+    TResult Function()? reconnect,
     required TResult orElse(),
   }) {
     if (createRoom != null) {
@@ -868,6 +895,7 @@ class _$ConnectionCreateRoomImpl implements ConnectionCreateRoom {
     required TResult Function(ConnectionErrorReceived value) errorReceived,
     required TResult Function(ConnectionPeerJoined value) peerJoined,
     required TResult Function(ConnectionPeerLeft value) peerLeft,
+    required TResult Function(ConnectionReconnect value) reconnect,
   }) {
     return createRoom(this);
   }
@@ -885,6 +913,7 @@ class _$ConnectionCreateRoomImpl implements ConnectionCreateRoom {
     TResult? Function(ConnectionErrorReceived value)? errorReceived,
     TResult? Function(ConnectionPeerJoined value)? peerJoined,
     TResult? Function(ConnectionPeerLeft value)? peerLeft,
+    TResult? Function(ConnectionReconnect value)? reconnect,
   }) {
     return createRoom?.call(this);
   }
@@ -902,6 +931,7 @@ class _$ConnectionCreateRoomImpl implements ConnectionCreateRoom {
     TResult Function(ConnectionErrorReceived value)? errorReceived,
     TResult Function(ConnectionPeerJoined value)? peerJoined,
     TResult Function(ConnectionPeerLeft value)? peerLeft,
+    TResult Function(ConnectionReconnect value)? reconnect,
     required TResult orElse(),
   }) {
     if (createRoom != null) {
@@ -979,6 +1009,7 @@ class _$ConnectionDisconnectImpl implements ConnectionDisconnect {
     required TResult Function(String message) errorReceived,
     required TResult Function(int id, String name) peerJoined,
     required TResult Function(int id) peerLeft,
+    required TResult Function() reconnect,
   }) {
     return disconnect();
   }
@@ -998,6 +1029,7 @@ class _$ConnectionDisconnectImpl implements ConnectionDisconnect {
     TResult? Function(String message)? errorReceived,
     TResult? Function(int id, String name)? peerJoined,
     TResult? Function(int id)? peerLeft,
+    TResult? Function()? reconnect,
   }) {
     return disconnect?.call();
   }
@@ -1017,6 +1049,7 @@ class _$ConnectionDisconnectImpl implements ConnectionDisconnect {
     TResult Function(String message)? errorReceived,
     TResult Function(int id, String name)? peerJoined,
     TResult Function(int id)? peerLeft,
+    TResult Function()? reconnect,
     required TResult orElse(),
   }) {
     if (disconnect != null) {
@@ -1039,6 +1072,7 @@ class _$ConnectionDisconnectImpl implements ConnectionDisconnect {
     required TResult Function(ConnectionErrorReceived value) errorReceived,
     required TResult Function(ConnectionPeerJoined value) peerJoined,
     required TResult Function(ConnectionPeerLeft value) peerLeft,
+    required TResult Function(ConnectionReconnect value) reconnect,
   }) {
     return disconnect(this);
   }
@@ -1056,6 +1090,7 @@ class _$ConnectionDisconnectImpl implements ConnectionDisconnect {
     TResult? Function(ConnectionErrorReceived value)? errorReceived,
     TResult? Function(ConnectionPeerJoined value)? peerJoined,
     TResult? Function(ConnectionPeerLeft value)? peerLeft,
+    TResult? Function(ConnectionReconnect value)? reconnect,
   }) {
     return disconnect?.call(this);
   }
@@ -1073,6 +1108,7 @@ class _$ConnectionDisconnectImpl implements ConnectionDisconnect {
     TResult Function(ConnectionErrorReceived value)? errorReceived,
     TResult Function(ConnectionPeerJoined value)? peerJoined,
     TResult Function(ConnectionPeerLeft value)? peerLeft,
+    TResult Function(ConnectionReconnect value)? reconnect,
     required TResult orElse(),
   }) {
     if (disconnect != null) {
@@ -1178,6 +1214,7 @@ class _$ConnectionRoomListReceivedImpl implements ConnectionRoomListReceived {
     required TResult Function(String message) errorReceived,
     required TResult Function(int id, String name) peerJoined,
     required TResult Function(int id) peerLeft,
+    required TResult Function() reconnect,
   }) {
     return roomListReceived(rooms);
   }
@@ -1197,6 +1234,7 @@ class _$ConnectionRoomListReceivedImpl implements ConnectionRoomListReceived {
     TResult? Function(String message)? errorReceived,
     TResult? Function(int id, String name)? peerJoined,
     TResult? Function(int id)? peerLeft,
+    TResult? Function()? reconnect,
   }) {
     return roomListReceived?.call(rooms);
   }
@@ -1216,6 +1254,7 @@ class _$ConnectionRoomListReceivedImpl implements ConnectionRoomListReceived {
     TResult Function(String message)? errorReceived,
     TResult Function(int id, String name)? peerJoined,
     TResult Function(int id)? peerLeft,
+    TResult Function()? reconnect,
     required TResult orElse(),
   }) {
     if (roomListReceived != null) {
@@ -1238,6 +1277,7 @@ class _$ConnectionRoomListReceivedImpl implements ConnectionRoomListReceived {
     required TResult Function(ConnectionErrorReceived value) errorReceived,
     required TResult Function(ConnectionPeerJoined value) peerJoined,
     required TResult Function(ConnectionPeerLeft value) peerLeft,
+    required TResult Function(ConnectionReconnect value) reconnect,
   }) {
     return roomListReceived(this);
   }
@@ -1255,6 +1295,7 @@ class _$ConnectionRoomListReceivedImpl implements ConnectionRoomListReceived {
     TResult? Function(ConnectionErrorReceived value)? errorReceived,
     TResult? Function(ConnectionPeerJoined value)? peerJoined,
     TResult? Function(ConnectionPeerLeft value)? peerLeft,
+    TResult? Function(ConnectionReconnect value)? reconnect,
   }) {
     return roomListReceived?.call(this);
   }
@@ -1272,6 +1313,7 @@ class _$ConnectionRoomListReceivedImpl implements ConnectionRoomListReceived {
     TResult Function(ConnectionErrorReceived value)? errorReceived,
     TResult Function(ConnectionPeerJoined value)? peerJoined,
     TResult Function(ConnectionPeerLeft value)? peerLeft,
+    TResult Function(ConnectionReconnect value)? reconnect,
     required TResult orElse(),
   }) {
     if (roomListReceived != null) {
@@ -1405,6 +1447,7 @@ class _$ConnectionWelcomeReceivedImpl implements ConnectionWelcomeReceived {
     required TResult Function(String message) errorReceived,
     required TResult Function(int id, String name) peerJoined,
     required TResult Function(int id) peerLeft,
+    required TResult Function() reconnect,
   }) {
     return welcomeReceived(selfId, roomCode, peers);
   }
@@ -1424,6 +1467,7 @@ class _$ConnectionWelcomeReceivedImpl implements ConnectionWelcomeReceived {
     TResult? Function(String message)? errorReceived,
     TResult? Function(int id, String name)? peerJoined,
     TResult? Function(int id)? peerLeft,
+    TResult? Function()? reconnect,
   }) {
     return welcomeReceived?.call(selfId, roomCode, peers);
   }
@@ -1443,6 +1487,7 @@ class _$ConnectionWelcomeReceivedImpl implements ConnectionWelcomeReceived {
     TResult Function(String message)? errorReceived,
     TResult Function(int id, String name)? peerJoined,
     TResult Function(int id)? peerLeft,
+    TResult Function()? reconnect,
     required TResult orElse(),
   }) {
     if (welcomeReceived != null) {
@@ -1465,6 +1510,7 @@ class _$ConnectionWelcomeReceivedImpl implements ConnectionWelcomeReceived {
     required TResult Function(ConnectionErrorReceived value) errorReceived,
     required TResult Function(ConnectionPeerJoined value) peerJoined,
     required TResult Function(ConnectionPeerLeft value) peerLeft,
+    required TResult Function(ConnectionReconnect value) reconnect,
   }) {
     return welcomeReceived(this);
   }
@@ -1482,6 +1528,7 @@ class _$ConnectionWelcomeReceivedImpl implements ConnectionWelcomeReceived {
     TResult? Function(ConnectionErrorReceived value)? errorReceived,
     TResult? Function(ConnectionPeerJoined value)? peerJoined,
     TResult? Function(ConnectionPeerLeft value)? peerLeft,
+    TResult? Function(ConnectionReconnect value)? reconnect,
   }) {
     return welcomeReceived?.call(this);
   }
@@ -1499,6 +1546,7 @@ class _$ConnectionWelcomeReceivedImpl implements ConnectionWelcomeReceived {
     TResult Function(ConnectionErrorReceived value)? errorReceived,
     TResult Function(ConnectionPeerJoined value)? peerJoined,
     TResult Function(ConnectionPeerLeft value)? peerLeft,
+    TResult Function(ConnectionReconnect value)? reconnect,
     required TResult orElse(),
   }) {
     if (welcomeReceived != null) {
@@ -1610,6 +1658,7 @@ class _$ConnectionErrorReceivedImpl implements ConnectionErrorReceived {
     required TResult Function(String message) errorReceived,
     required TResult Function(int id, String name) peerJoined,
     required TResult Function(int id) peerLeft,
+    required TResult Function() reconnect,
   }) {
     return errorReceived(message);
   }
@@ -1629,6 +1678,7 @@ class _$ConnectionErrorReceivedImpl implements ConnectionErrorReceived {
     TResult? Function(String message)? errorReceived,
     TResult? Function(int id, String name)? peerJoined,
     TResult? Function(int id)? peerLeft,
+    TResult? Function()? reconnect,
   }) {
     return errorReceived?.call(message);
   }
@@ -1648,6 +1698,7 @@ class _$ConnectionErrorReceivedImpl implements ConnectionErrorReceived {
     TResult Function(String message)? errorReceived,
     TResult Function(int id, String name)? peerJoined,
     TResult Function(int id)? peerLeft,
+    TResult Function()? reconnect,
     required TResult orElse(),
   }) {
     if (errorReceived != null) {
@@ -1670,6 +1721,7 @@ class _$ConnectionErrorReceivedImpl implements ConnectionErrorReceived {
     required TResult Function(ConnectionErrorReceived value) errorReceived,
     required TResult Function(ConnectionPeerJoined value) peerJoined,
     required TResult Function(ConnectionPeerLeft value) peerLeft,
+    required TResult Function(ConnectionReconnect value) reconnect,
   }) {
     return errorReceived(this);
   }
@@ -1687,6 +1739,7 @@ class _$ConnectionErrorReceivedImpl implements ConnectionErrorReceived {
     TResult? Function(ConnectionErrorReceived value)? errorReceived,
     TResult? Function(ConnectionPeerJoined value)? peerJoined,
     TResult? Function(ConnectionPeerLeft value)? peerLeft,
+    TResult? Function(ConnectionReconnect value)? reconnect,
   }) {
     return errorReceived?.call(this);
   }
@@ -1704,6 +1757,7 @@ class _$ConnectionErrorReceivedImpl implements ConnectionErrorReceived {
     TResult Function(ConnectionErrorReceived value)? errorReceived,
     TResult Function(ConnectionPeerJoined value)? peerJoined,
     TResult Function(ConnectionPeerLeft value)? peerLeft,
+    TResult Function(ConnectionReconnect value)? reconnect,
     required TResult orElse(),
   }) {
     if (errorReceived != null) {
@@ -1817,6 +1871,7 @@ class _$ConnectionPeerJoinedImpl implements ConnectionPeerJoined {
     required TResult Function(String message) errorReceived,
     required TResult Function(int id, String name) peerJoined,
     required TResult Function(int id) peerLeft,
+    required TResult Function() reconnect,
   }) {
     return peerJoined(id, name);
   }
@@ -1836,6 +1891,7 @@ class _$ConnectionPeerJoinedImpl implements ConnectionPeerJoined {
     TResult? Function(String message)? errorReceived,
     TResult? Function(int id, String name)? peerJoined,
     TResult? Function(int id)? peerLeft,
+    TResult? Function()? reconnect,
   }) {
     return peerJoined?.call(id, name);
   }
@@ -1855,6 +1911,7 @@ class _$ConnectionPeerJoinedImpl implements ConnectionPeerJoined {
     TResult Function(String message)? errorReceived,
     TResult Function(int id, String name)? peerJoined,
     TResult Function(int id)? peerLeft,
+    TResult Function()? reconnect,
     required TResult orElse(),
   }) {
     if (peerJoined != null) {
@@ -1877,6 +1934,7 @@ class _$ConnectionPeerJoinedImpl implements ConnectionPeerJoined {
     required TResult Function(ConnectionErrorReceived value) errorReceived,
     required TResult Function(ConnectionPeerJoined value) peerJoined,
     required TResult Function(ConnectionPeerLeft value) peerLeft,
+    required TResult Function(ConnectionReconnect value) reconnect,
   }) {
     return peerJoined(this);
   }
@@ -1894,6 +1952,7 @@ class _$ConnectionPeerJoinedImpl implements ConnectionPeerJoined {
     TResult? Function(ConnectionErrorReceived value)? errorReceived,
     TResult? Function(ConnectionPeerJoined value)? peerJoined,
     TResult? Function(ConnectionPeerLeft value)? peerLeft,
+    TResult? Function(ConnectionReconnect value)? reconnect,
   }) {
     return peerJoined?.call(this);
   }
@@ -1911,6 +1970,7 @@ class _$ConnectionPeerJoinedImpl implements ConnectionPeerJoined {
     TResult Function(ConnectionErrorReceived value)? errorReceived,
     TResult Function(ConnectionPeerJoined value)? peerJoined,
     TResult Function(ConnectionPeerLeft value)? peerLeft,
+    TResult Function(ConnectionReconnect value)? reconnect,
     required TResult orElse(),
   }) {
     if (peerJoined != null) {
@@ -2017,6 +2077,7 @@ class _$ConnectionPeerLeftImpl implements ConnectionPeerLeft {
     required TResult Function(String message) errorReceived,
     required TResult Function(int id, String name) peerJoined,
     required TResult Function(int id) peerLeft,
+    required TResult Function() reconnect,
   }) {
     return peerLeft(id);
   }
@@ -2036,6 +2097,7 @@ class _$ConnectionPeerLeftImpl implements ConnectionPeerLeft {
     TResult? Function(String message)? errorReceived,
     TResult? Function(int id, String name)? peerJoined,
     TResult? Function(int id)? peerLeft,
+    TResult? Function()? reconnect,
   }) {
     return peerLeft?.call(id);
   }
@@ -2055,6 +2117,7 @@ class _$ConnectionPeerLeftImpl implements ConnectionPeerLeft {
     TResult Function(String message)? errorReceived,
     TResult Function(int id, String name)? peerJoined,
     TResult Function(int id)? peerLeft,
+    TResult Function()? reconnect,
     required TResult orElse(),
   }) {
     if (peerLeft != null) {
@@ -2077,6 +2140,7 @@ class _$ConnectionPeerLeftImpl implements ConnectionPeerLeft {
     required TResult Function(ConnectionErrorReceived value) errorReceived,
     required TResult Function(ConnectionPeerJoined value) peerJoined,
     required TResult Function(ConnectionPeerLeft value) peerLeft,
+    required TResult Function(ConnectionReconnect value) reconnect,
   }) {
     return peerLeft(this);
   }
@@ -2094,6 +2158,7 @@ class _$ConnectionPeerLeftImpl implements ConnectionPeerLeft {
     TResult? Function(ConnectionErrorReceived value)? errorReceived,
     TResult? Function(ConnectionPeerJoined value)? peerJoined,
     TResult? Function(ConnectionPeerLeft value)? peerLeft,
+    TResult? Function(ConnectionReconnect value)? reconnect,
   }) {
     return peerLeft?.call(this);
   }
@@ -2111,6 +2176,7 @@ class _$ConnectionPeerLeftImpl implements ConnectionPeerLeft {
     TResult Function(ConnectionErrorReceived value)? errorReceived,
     TResult Function(ConnectionPeerJoined value)? peerJoined,
     TResult Function(ConnectionPeerLeft value)? peerLeft,
+    TResult Function(ConnectionReconnect value)? reconnect,
     required TResult orElse(),
   }) {
     if (peerLeft != null) {
@@ -2134,6 +2200,174 @@ abstract class ConnectionPeerLeft implements ConnectionEvent {
 }
 
 /// @nodoc
+abstract class _$$ConnectionReconnectImplCopyWith<$Res> {
+  factory _$$ConnectionReconnectImplCopyWith(_$ConnectionReconnectImpl value,
+          $Res Function(_$ConnectionReconnectImpl) then) =
+      __$$ConnectionReconnectImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ConnectionReconnectImplCopyWithImpl<$Res>
+    extends _$ConnectionEventCopyWithImpl<$Res, _$ConnectionReconnectImpl>
+    implements _$$ConnectionReconnectImplCopyWith<$Res> {
+  __$$ConnectionReconnectImplCopyWithImpl(_$ConnectionReconnectImpl _value,
+      $Res Function(_$ConnectionReconnectImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ConnectionEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$ConnectionReconnectImpl implements ConnectionReconnect {
+  const _$ConnectionReconnectImpl();
+
+  @override
+  String toString() {
+    return 'ConnectionEvent.reconnect()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ConnectionReconnectImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String hubHost, int hubPort, String username)
+        connect,
+    required TResult Function() listRooms,
+    required TResult Function(String code, String username) joinRoom,
+    required TResult Function(String username) createRoom,
+    required TResult Function() disconnect,
+    required TResult Function(List<RoomInfo> rooms) roomListReceived,
+    required TResult Function(
+            int selfId, String roomCode, List<({int id, String name})> peers)
+        welcomeReceived,
+    required TResult Function(String message) errorReceived,
+    required TResult Function(int id, String name) peerJoined,
+    required TResult Function(int id) peerLeft,
+    required TResult Function() reconnect,
+  }) {
+    return reconnect();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String hubHost, int hubPort, String username)? connect,
+    TResult? Function()? listRooms,
+    TResult? Function(String code, String username)? joinRoom,
+    TResult? Function(String username)? createRoom,
+    TResult? Function()? disconnect,
+    TResult? Function(List<RoomInfo> rooms)? roomListReceived,
+    TResult? Function(
+            int selfId, String roomCode, List<({int id, String name})> peers)?
+        welcomeReceived,
+    TResult? Function(String message)? errorReceived,
+    TResult? Function(int id, String name)? peerJoined,
+    TResult? Function(int id)? peerLeft,
+    TResult? Function()? reconnect,
+  }) {
+    return reconnect?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String hubHost, int hubPort, String username)? connect,
+    TResult Function()? listRooms,
+    TResult Function(String code, String username)? joinRoom,
+    TResult Function(String username)? createRoom,
+    TResult Function()? disconnect,
+    TResult Function(List<RoomInfo> rooms)? roomListReceived,
+    TResult Function(
+            int selfId, String roomCode, List<({int id, String name})> peers)?
+        welcomeReceived,
+    TResult Function(String message)? errorReceived,
+    TResult Function(int id, String name)? peerJoined,
+    TResult Function(int id)? peerLeft,
+    TResult Function()? reconnect,
+    required TResult orElse(),
+  }) {
+    if (reconnect != null) {
+      return reconnect();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ConnectionConnect value) connect,
+    required TResult Function(ConnectionListRooms value) listRooms,
+    required TResult Function(ConnectionJoinRoom value) joinRoom,
+    required TResult Function(ConnectionCreateRoom value) createRoom,
+    required TResult Function(ConnectionDisconnect value) disconnect,
+    required TResult Function(ConnectionRoomListReceived value)
+        roomListReceived,
+    required TResult Function(ConnectionWelcomeReceived value) welcomeReceived,
+    required TResult Function(ConnectionErrorReceived value) errorReceived,
+    required TResult Function(ConnectionPeerJoined value) peerJoined,
+    required TResult Function(ConnectionPeerLeft value) peerLeft,
+    required TResult Function(ConnectionReconnect value) reconnect,
+  }) {
+    return reconnect(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ConnectionConnect value)? connect,
+    TResult? Function(ConnectionListRooms value)? listRooms,
+    TResult? Function(ConnectionJoinRoom value)? joinRoom,
+    TResult? Function(ConnectionCreateRoom value)? createRoom,
+    TResult? Function(ConnectionDisconnect value)? disconnect,
+    TResult? Function(ConnectionRoomListReceived value)? roomListReceived,
+    TResult? Function(ConnectionWelcomeReceived value)? welcomeReceived,
+    TResult? Function(ConnectionErrorReceived value)? errorReceived,
+    TResult? Function(ConnectionPeerJoined value)? peerJoined,
+    TResult? Function(ConnectionPeerLeft value)? peerLeft,
+    TResult? Function(ConnectionReconnect value)? reconnect,
+  }) {
+    return reconnect?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ConnectionConnect value)? connect,
+    TResult Function(ConnectionListRooms value)? listRooms,
+    TResult Function(ConnectionJoinRoom value)? joinRoom,
+    TResult Function(ConnectionCreateRoom value)? createRoom,
+    TResult Function(ConnectionDisconnect value)? disconnect,
+    TResult Function(ConnectionRoomListReceived value)? roomListReceived,
+    TResult Function(ConnectionWelcomeReceived value)? welcomeReceived,
+    TResult Function(ConnectionErrorReceived value)? errorReceived,
+    TResult Function(ConnectionPeerJoined value)? peerJoined,
+    TResult Function(ConnectionPeerLeft value)? peerLeft,
+    TResult Function(ConnectionReconnect value)? reconnect,
+    required TResult orElse(),
+  }) {
+    if (reconnect != null) {
+      return reconnect(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ConnectionReconnect implements ConnectionEvent {
+  const factory ConnectionReconnect() = _$ConnectionReconnectImpl;
+}
+
+/// @nodoc
 mixin _$ConnectionState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -2154,6 +2388,9 @@ mixin _$ConnectionState {
             int hubPort,
             List<({int id, String name})> existingPeers)
         inSession,
+    required TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)
+        reconnecting,
     required TResult Function(String message) failed,
   }) =>
       throw _privateConstructorUsedError;
@@ -2175,6 +2412,9 @@ mixin _$ConnectionState {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult? Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult? Function(String message)? failed,
   }) =>
       throw _privateConstructorUsedError;
@@ -2196,6 +2436,9 @@ mixin _$ConnectionState {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult Function(String message)? failed,
     required TResult orElse(),
   }) =>
@@ -2207,6 +2450,7 @@ mixin _$ConnectionState {
     required TResult Function(ConnectionSelectingRoom value) selectingRoom,
     required TResult Function(ConnectionJoining value) joining,
     required TResult Function(ConnectionInSession value) inSession,
+    required TResult Function(ConnectionReconnecting value) reconnecting,
     required TResult Function(ConnectionFailed value) failed,
   }) =>
       throw _privateConstructorUsedError;
@@ -2217,6 +2461,7 @@ mixin _$ConnectionState {
     TResult? Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult? Function(ConnectionJoining value)? joining,
     TResult? Function(ConnectionInSession value)? inSession,
+    TResult? Function(ConnectionReconnecting value)? reconnecting,
     TResult? Function(ConnectionFailed value)? failed,
   }) =>
       throw _privateConstructorUsedError;
@@ -2227,6 +2472,7 @@ mixin _$ConnectionState {
     TResult Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult Function(ConnectionJoining value)? joining,
     TResult Function(ConnectionInSession value)? inSession,
+    TResult Function(ConnectionReconnecting value)? reconnecting,
     TResult Function(ConnectionFailed value)? failed,
     required TResult orElse(),
   }) =>
@@ -2312,6 +2558,9 @@ class _$ConnectionIdleImpl implements ConnectionIdle {
             int hubPort,
             List<({int id, String name})> existingPeers)
         inSession,
+    required TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)
+        reconnecting,
     required TResult Function(String message) failed,
   }) {
     return idle();
@@ -2336,6 +2585,9 @@ class _$ConnectionIdleImpl implements ConnectionIdle {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult? Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult? Function(String message)? failed,
   }) {
     return idle?.call();
@@ -2360,6 +2612,9 @@ class _$ConnectionIdleImpl implements ConnectionIdle {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult Function(String message)? failed,
     required TResult orElse(),
   }) {
@@ -2377,6 +2632,7 @@ class _$ConnectionIdleImpl implements ConnectionIdle {
     required TResult Function(ConnectionSelectingRoom value) selectingRoom,
     required TResult Function(ConnectionJoining value) joining,
     required TResult Function(ConnectionInSession value) inSession,
+    required TResult Function(ConnectionReconnecting value) reconnecting,
     required TResult Function(ConnectionFailed value) failed,
   }) {
     return idle(this);
@@ -2390,6 +2646,7 @@ class _$ConnectionIdleImpl implements ConnectionIdle {
     TResult? Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult? Function(ConnectionJoining value)? joining,
     TResult? Function(ConnectionInSession value)? inSession,
+    TResult? Function(ConnectionReconnecting value)? reconnecting,
     TResult? Function(ConnectionFailed value)? failed,
   }) {
     return idle?.call(this);
@@ -2403,6 +2660,7 @@ class _$ConnectionIdleImpl implements ConnectionIdle {
     TResult Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult Function(ConnectionJoining value)? joining,
     TResult Function(ConnectionInSession value)? inSession,
+    TResult Function(ConnectionReconnecting value)? reconnecting,
     TResult Function(ConnectionFailed value)? failed,
     required TResult orElse(),
   }) {
@@ -2522,6 +2780,9 @@ class _$ConnectionConnectingImpl implements ConnectionConnecting {
             int hubPort,
             List<({int id, String name})> existingPeers)
         inSession,
+    required TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)
+        reconnecting,
     required TResult Function(String message) failed,
   }) {
     return connecting(hubHost, hubPort, username);
@@ -2546,6 +2807,9 @@ class _$ConnectionConnectingImpl implements ConnectionConnecting {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult? Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult? Function(String message)? failed,
   }) {
     return connecting?.call(hubHost, hubPort, username);
@@ -2570,6 +2834,9 @@ class _$ConnectionConnectingImpl implements ConnectionConnecting {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult Function(String message)? failed,
     required TResult orElse(),
   }) {
@@ -2587,6 +2854,7 @@ class _$ConnectionConnectingImpl implements ConnectionConnecting {
     required TResult Function(ConnectionSelectingRoom value) selectingRoom,
     required TResult Function(ConnectionJoining value) joining,
     required TResult Function(ConnectionInSession value) inSession,
+    required TResult Function(ConnectionReconnecting value) reconnecting,
     required TResult Function(ConnectionFailed value) failed,
   }) {
     return connecting(this);
@@ -2600,6 +2868,7 @@ class _$ConnectionConnectingImpl implements ConnectionConnecting {
     TResult? Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult? Function(ConnectionJoining value)? joining,
     TResult? Function(ConnectionInSession value)? inSession,
+    TResult? Function(ConnectionReconnecting value)? reconnecting,
     TResult? Function(ConnectionFailed value)? failed,
   }) {
     return connecting?.call(this);
@@ -2613,6 +2882,7 @@ class _$ConnectionConnectingImpl implements ConnectionConnecting {
     TResult Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult Function(ConnectionJoining value)? joining,
     TResult Function(ConnectionInSession value)? inSession,
+    TResult Function(ConnectionReconnecting value)? reconnecting,
     TResult Function(ConnectionFailed value)? failed,
     required TResult orElse(),
   }) {
@@ -2765,6 +3035,9 @@ class _$ConnectionSelectingRoomImpl implements ConnectionSelectingRoom {
             int hubPort,
             List<({int id, String name})> existingPeers)
         inSession,
+    required TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)
+        reconnecting,
     required TResult Function(String message) failed,
   }) {
     return selectingRoom(hubHost, hubPort, username, rooms);
@@ -2789,6 +3062,9 @@ class _$ConnectionSelectingRoomImpl implements ConnectionSelectingRoom {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult? Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult? Function(String message)? failed,
   }) {
     return selectingRoom?.call(hubHost, hubPort, username, rooms);
@@ -2813,6 +3089,9 @@ class _$ConnectionSelectingRoomImpl implements ConnectionSelectingRoom {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult Function(String message)? failed,
     required TResult orElse(),
   }) {
@@ -2830,6 +3109,7 @@ class _$ConnectionSelectingRoomImpl implements ConnectionSelectingRoom {
     required TResult Function(ConnectionSelectingRoom value) selectingRoom,
     required TResult Function(ConnectionJoining value) joining,
     required TResult Function(ConnectionInSession value) inSession,
+    required TResult Function(ConnectionReconnecting value) reconnecting,
     required TResult Function(ConnectionFailed value) failed,
   }) {
     return selectingRoom(this);
@@ -2843,6 +3123,7 @@ class _$ConnectionSelectingRoomImpl implements ConnectionSelectingRoom {
     TResult? Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult? Function(ConnectionJoining value)? joining,
     TResult? Function(ConnectionInSession value)? inSession,
+    TResult? Function(ConnectionReconnecting value)? reconnecting,
     TResult? Function(ConnectionFailed value)? failed,
   }) {
     return selectingRoom?.call(this);
@@ -2856,6 +3137,7 @@ class _$ConnectionSelectingRoomImpl implements ConnectionSelectingRoom {
     TResult Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult Function(ConnectionJoining value)? joining,
     TResult Function(ConnectionInSession value)? inSession,
+    TResult Function(ConnectionReconnecting value)? reconnecting,
     TResult Function(ConnectionFailed value)? failed,
     required TResult orElse(),
   }) {
@@ -3002,6 +3284,9 @@ class _$ConnectionJoiningImpl implements ConnectionJoining {
             int hubPort,
             List<({int id, String name})> existingPeers)
         inSession,
+    required TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)
+        reconnecting,
     required TResult Function(String message) failed,
   }) {
     return joining(hubHost, hubPort, username, roomCode);
@@ -3026,6 +3311,9 @@ class _$ConnectionJoiningImpl implements ConnectionJoining {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult? Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult? Function(String message)? failed,
   }) {
     return joining?.call(hubHost, hubPort, username, roomCode);
@@ -3050,6 +3338,9 @@ class _$ConnectionJoiningImpl implements ConnectionJoining {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult Function(String message)? failed,
     required TResult orElse(),
   }) {
@@ -3067,6 +3358,7 @@ class _$ConnectionJoiningImpl implements ConnectionJoining {
     required TResult Function(ConnectionSelectingRoom value) selectingRoom,
     required TResult Function(ConnectionJoining value) joining,
     required TResult Function(ConnectionInSession value) inSession,
+    required TResult Function(ConnectionReconnecting value) reconnecting,
     required TResult Function(ConnectionFailed value) failed,
   }) {
     return joining(this);
@@ -3080,6 +3372,7 @@ class _$ConnectionJoiningImpl implements ConnectionJoining {
     TResult? Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult? Function(ConnectionJoining value)? joining,
     TResult? Function(ConnectionInSession value)? inSession,
+    TResult? Function(ConnectionReconnecting value)? reconnecting,
     TResult? Function(ConnectionFailed value)? failed,
   }) {
     return joining?.call(this);
@@ -3093,6 +3386,7 @@ class _$ConnectionJoiningImpl implements ConnectionJoining {
     TResult Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult Function(ConnectionJoining value)? joining,
     TResult Function(ConnectionInSession value)? inSession,
+    TResult Function(ConnectionReconnecting value)? reconnecting,
     TResult Function(ConnectionFailed value)? failed,
     required TResult orElse(),
   }) {
@@ -3275,6 +3569,9 @@ class _$ConnectionInSessionImpl implements ConnectionInSession {
             int hubPort,
             List<({int id, String name})> existingPeers)
         inSession,
+    required TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)
+        reconnecting,
     required TResult Function(String message) failed,
   }) {
     return inSession(
@@ -3300,6 +3597,9 @@ class _$ConnectionInSessionImpl implements ConnectionInSession {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult? Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult? Function(String message)? failed,
   }) {
     return inSession?.call(
@@ -3325,6 +3625,9 @@ class _$ConnectionInSessionImpl implements ConnectionInSession {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult Function(String message)? failed,
     required TResult orElse(),
   }) {
@@ -3343,6 +3646,7 @@ class _$ConnectionInSessionImpl implements ConnectionInSession {
     required TResult Function(ConnectionSelectingRoom value) selectingRoom,
     required TResult Function(ConnectionJoining value) joining,
     required TResult Function(ConnectionInSession value) inSession,
+    required TResult Function(ConnectionReconnecting value) reconnecting,
     required TResult Function(ConnectionFailed value) failed,
   }) {
     return inSession(this);
@@ -3356,6 +3660,7 @@ class _$ConnectionInSessionImpl implements ConnectionInSession {
     TResult? Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult? Function(ConnectionJoining value)? joining,
     TResult? Function(ConnectionInSession value)? inSession,
+    TResult? Function(ConnectionReconnecting value)? reconnecting,
     TResult? Function(ConnectionFailed value)? failed,
   }) {
     return inSession?.call(this);
@@ -3369,6 +3674,7 @@ class _$ConnectionInSessionImpl implements ConnectionInSession {
     TResult Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult Function(ConnectionJoining value)? joining,
     TResult Function(ConnectionInSession value)? inSession,
+    TResult Function(ConnectionReconnecting value)? reconnecting,
     TResult Function(ConnectionFailed value)? failed,
     required TResult orElse(),
   }) {
@@ -3403,6 +3709,274 @@ abstract class ConnectionInSession implements ConnectionState {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ConnectionInSessionImplCopyWith<_$ConnectionInSessionImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ConnectionReconnectingImplCopyWith<$Res> {
+  factory _$$ConnectionReconnectingImplCopyWith(
+          _$ConnectionReconnectingImpl value,
+          $Res Function(_$ConnectionReconnectingImpl) then) =
+      __$$ConnectionReconnectingImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {String hubHost,
+      int hubPort,
+      String username,
+      String roomCode,
+      int attempt});
+}
+
+/// @nodoc
+class __$$ConnectionReconnectingImplCopyWithImpl<$Res>
+    extends _$ConnectionStateCopyWithImpl<$Res, _$ConnectionReconnectingImpl>
+    implements _$$ConnectionReconnectingImplCopyWith<$Res> {
+  __$$ConnectionReconnectingImplCopyWithImpl(
+      _$ConnectionReconnectingImpl _value,
+      $Res Function(_$ConnectionReconnectingImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ConnectionState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? hubHost = null,
+    Object? hubPort = null,
+    Object? username = null,
+    Object? roomCode = null,
+    Object? attempt = null,
+  }) {
+    return _then(_$ConnectionReconnectingImpl(
+      hubHost: null == hubHost
+          ? _value.hubHost
+          : hubHost // ignore: cast_nullable_to_non_nullable
+              as String,
+      hubPort: null == hubPort
+          ? _value.hubPort
+          : hubPort // ignore: cast_nullable_to_non_nullable
+              as int,
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+      roomCode: null == roomCode
+          ? _value.roomCode
+          : roomCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      attempt: null == attempt
+          ? _value.attempt
+          : attempt // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ConnectionReconnectingImpl implements ConnectionReconnecting {
+  const _$ConnectionReconnectingImpl(
+      {required this.hubHost,
+      required this.hubPort,
+      required this.username,
+      required this.roomCode,
+      this.attempt = 0});
+
+  @override
+  final String hubHost;
+  @override
+  final int hubPort;
+  @override
+  final String username;
+  @override
+  final String roomCode;
+  @override
+  @JsonKey()
+  final int attempt;
+
+  @override
+  String toString() {
+    return 'ConnectionState.reconnecting(hubHost: $hubHost, hubPort: $hubPort, username: $username, roomCode: $roomCode, attempt: $attempt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ConnectionReconnectingImpl &&
+            (identical(other.hubHost, hubHost) || other.hubHost == hubHost) &&
+            (identical(other.hubPort, hubPort) || other.hubPort == hubPort) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
+            (identical(other.roomCode, roomCode) ||
+                other.roomCode == roomCode) &&
+            (identical(other.attempt, attempt) || other.attempt == attempt));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, hubHost, hubPort, username, roomCode, attempt);
+
+  /// Create a copy of ConnectionState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ConnectionReconnectingImplCopyWith<_$ConnectionReconnectingImpl>
+      get copyWith => __$$ConnectionReconnectingImplCopyWithImpl<
+          _$ConnectionReconnectingImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() idle,
+    required TResult Function(String hubHost, int hubPort, String username)
+        connecting,
+    required TResult Function(
+            String hubHost, int hubPort, String username, List<RoomInfo> rooms)
+        selectingRoom,
+    required TResult Function(
+            String hubHost, int hubPort, String username, String roomCode)
+        joining,
+    required TResult Function(
+            int selfId,
+            String roomCode,
+            String username,
+            String hubHost,
+            int hubPort,
+            List<({int id, String name})> existingPeers)
+        inSession,
+    required TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)
+        reconnecting,
+    required TResult Function(String message) failed,
+  }) {
+    return reconnecting(hubHost, hubPort, username, roomCode, attempt);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? idle,
+    TResult? Function(String hubHost, int hubPort, String username)? connecting,
+    TResult? Function(
+            String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
+        selectingRoom,
+    TResult? Function(
+            String hubHost, int hubPort, String username, String roomCode)?
+        joining,
+    TResult? Function(
+            int selfId,
+            String roomCode,
+            String username,
+            String hubHost,
+            int hubPort,
+            List<({int id, String name})> existingPeers)?
+        inSession,
+    TResult? Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
+    TResult? Function(String message)? failed,
+  }) {
+    return reconnecting?.call(hubHost, hubPort, username, roomCode, attempt);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? idle,
+    TResult Function(String hubHost, int hubPort, String username)? connecting,
+    TResult Function(
+            String hubHost, int hubPort, String username, List<RoomInfo> rooms)?
+        selectingRoom,
+    TResult Function(
+            String hubHost, int hubPort, String username, String roomCode)?
+        joining,
+    TResult Function(
+            int selfId,
+            String roomCode,
+            String username,
+            String hubHost,
+            int hubPort,
+            List<({int id, String name})> existingPeers)?
+        inSession,
+    TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
+    TResult Function(String message)? failed,
+    required TResult orElse(),
+  }) {
+    if (reconnecting != null) {
+      return reconnecting(hubHost, hubPort, username, roomCode, attempt);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ConnectionIdle value) idle,
+    required TResult Function(ConnectionConnecting value) connecting,
+    required TResult Function(ConnectionSelectingRoom value) selectingRoom,
+    required TResult Function(ConnectionJoining value) joining,
+    required TResult Function(ConnectionInSession value) inSession,
+    required TResult Function(ConnectionReconnecting value) reconnecting,
+    required TResult Function(ConnectionFailed value) failed,
+  }) {
+    return reconnecting(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ConnectionIdle value)? idle,
+    TResult? Function(ConnectionConnecting value)? connecting,
+    TResult? Function(ConnectionSelectingRoom value)? selectingRoom,
+    TResult? Function(ConnectionJoining value)? joining,
+    TResult? Function(ConnectionInSession value)? inSession,
+    TResult? Function(ConnectionReconnecting value)? reconnecting,
+    TResult? Function(ConnectionFailed value)? failed,
+  }) {
+    return reconnecting?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ConnectionIdle value)? idle,
+    TResult Function(ConnectionConnecting value)? connecting,
+    TResult Function(ConnectionSelectingRoom value)? selectingRoom,
+    TResult Function(ConnectionJoining value)? joining,
+    TResult Function(ConnectionInSession value)? inSession,
+    TResult Function(ConnectionReconnecting value)? reconnecting,
+    TResult Function(ConnectionFailed value)? failed,
+    required TResult orElse(),
+  }) {
+    if (reconnecting != null) {
+      return reconnecting(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ConnectionReconnecting implements ConnectionState {
+  const factory ConnectionReconnecting(
+      {required final String hubHost,
+      required final int hubPort,
+      required final String username,
+      required final String roomCode,
+      final int attempt}) = _$ConnectionReconnectingImpl;
+
+  String get hubHost;
+  int get hubPort;
+  String get username;
+  String get roomCode;
+  int get attempt;
+
+  /// Create a copy of ConnectionState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ConnectionReconnectingImplCopyWith<_$ConnectionReconnectingImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -3491,6 +4065,9 @@ class _$ConnectionFailedImpl implements ConnectionFailed {
             int hubPort,
             List<({int id, String name})> existingPeers)
         inSession,
+    required TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)
+        reconnecting,
     required TResult Function(String message) failed,
   }) {
     return failed(message);
@@ -3515,6 +4092,9 @@ class _$ConnectionFailedImpl implements ConnectionFailed {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult? Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult? Function(String message)? failed,
   }) {
     return failed?.call(message);
@@ -3539,6 +4119,9 @@ class _$ConnectionFailedImpl implements ConnectionFailed {
             int hubPort,
             List<({int id, String name})> existingPeers)?
         inSession,
+    TResult Function(String hubHost, int hubPort, String username,
+            String roomCode, int attempt)?
+        reconnecting,
     TResult Function(String message)? failed,
     required TResult orElse(),
   }) {
@@ -3556,6 +4139,7 @@ class _$ConnectionFailedImpl implements ConnectionFailed {
     required TResult Function(ConnectionSelectingRoom value) selectingRoom,
     required TResult Function(ConnectionJoining value) joining,
     required TResult Function(ConnectionInSession value) inSession,
+    required TResult Function(ConnectionReconnecting value) reconnecting,
     required TResult Function(ConnectionFailed value) failed,
   }) {
     return failed(this);
@@ -3569,6 +4153,7 @@ class _$ConnectionFailedImpl implements ConnectionFailed {
     TResult? Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult? Function(ConnectionJoining value)? joining,
     TResult? Function(ConnectionInSession value)? inSession,
+    TResult? Function(ConnectionReconnecting value)? reconnecting,
     TResult? Function(ConnectionFailed value)? failed,
   }) {
     return failed?.call(this);
@@ -3582,6 +4167,7 @@ class _$ConnectionFailedImpl implements ConnectionFailed {
     TResult Function(ConnectionSelectingRoom value)? selectingRoom,
     TResult Function(ConnectionJoining value)? joining,
     TResult Function(ConnectionInSession value)? inSession,
+    TResult Function(ConnectionReconnecting value)? reconnecting,
     TResult Function(ConnectionFailed value)? failed,
     required TResult orElse(),
   }) {

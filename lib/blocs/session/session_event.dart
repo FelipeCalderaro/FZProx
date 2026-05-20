@@ -54,5 +54,11 @@ class SessionEvent with _$SessionEvent {
   /// When muted the gain loop sends 0,0 gains (EMA fades the peer out smoothly).
   const factory SessionEvent.peerMuteToggled({required int id}) = SessionPeerMuteToggled;
 
+  /// Sets the per-peer manual volume multiplier (0.0–2.0).
+  const factory SessionEvent.peerVolumeChanged({
+    required int    id,
+    required double multiplier,
+  }) = SessionPeerVolumeChanged;
+
   const factory SessionEvent.ended() = SessionEnded;
 }

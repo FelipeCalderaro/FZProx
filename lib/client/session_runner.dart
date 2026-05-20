@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import '../audio/audio_engine.dart';
+import '../audio/opus_codec_service.dart';
 import '../blocs/connection/connection_bloc.dart';
 import '../blocs/session/session_bloc.dart';
 import '../doppler/doppler.dart';
@@ -46,6 +47,9 @@ class SessionRunner {
   Future<void> start() async {
     if (_running) return;
     _running = true;
+
+    // Initialise Opus codec (no-op if already done)
+    await OpusCodecService.instance.init();
 
     _startCapture();
     _startPlayback();
@@ -150,14 +154,25 @@ class SessionRunner {
   }
 
   void _handlePeerAudio(Uint8List payload) {
-    if (payload.length < 1921) return;
+    if (payload.isEmpty) return;
     final peerId = payload[0];
+    if (payload.length < 2) return;
 
-    // Reconstruct Int16List from the raw bytes
-    final bytes   = payload.sublist(1, 1921);
-    final samples = Int16List(kFrameSamples);
-    for (var i = 0; i < kFrameSamples; i++) {
-      samples[i] = (bytes[i * 2] | (bytes[i * 2 + 1] << 8)).toSigned(16);
+    final data = payload.sublist(1);
+    Int16List samples;
+
+    if (data.length == kPcmBytes) {
+      // Legacy raw PCM path (1920 bytes = 960 × int16 LE)
+      samples = Int16List(kFrameSamples);
+      for (var i = 0; i < kFrameSamples; i++) {
+        samples[i] = (data[i * 2] | (data[i * 2 + 1] << 8)).toSigned(16);
+      }
+    } else {
+      // Opus-encoded packet
+      final codec = OpusCodecService.instance;
+      samples = codec.isReady
+          ? codec.decode(data)
+          : Int16List(kFrameSamples); // silence until codec is ready
     }
 
     // Apply Doppler: get peer position from SessionBloc state
@@ -191,10 +206,14 @@ class SessionRunner {
       final frame = _audio.popCapture();
       if (frame == null) return;
 
-      final bytes = Uint8List(kPcmBytes);
-      for (var i = 0; i < kFrameSamples; i++) {
-        bytes[i * 2]     = frame[i] & 0xFF;
-        bytes[i * 2 + 1] = (frame[i] >> 8) & 0xFF;
+      final codec = OpusCodecService.instance;
+      Uint8List bytes;
+      if (codec.isReady) {
+        // Opus path — compact encoded packet
+        bytes = codec.encode(frame) ?? _pcmFallback(frame);
+      } else {
+        // Raw PCM fallback (codec not yet loaded)
+        bytes = _pcmFallback(frame);
       }
       await _client.sendAudio(bytes);
 
@@ -207,6 +226,16 @@ class SessionRunner {
         }
       }
     });
+  }
+
+  /// Packs a raw PCM frame into little-endian bytes (legacy wire format).
+  Uint8List _pcmFallback(Int16List frame) {
+    final bytes = Uint8List(kPcmBytes);
+    for (var i = 0; i < kFrameSamples; i++) {
+      bytes[i * 2]     = frame[i] & 0xFF;
+      bytes[i * 2 + 1] = (frame[i] >> 8) & 0xFF;
+    }
+    return bytes;
   }
 
   // ── Teardown ──────────────────────────────────────────────────────────────

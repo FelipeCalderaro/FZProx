@@ -6,6 +6,7 @@ import '../../models/proximity_params.dart';
 import '../../models/setup_config.dart';
 import '../../audio/audio_engine.dart';
 import '../../protocol/protocol.dart';
+import '../../services/settings_service.dart';
 
 part 'setup_bloc.freezed.dart';
 part 'setup_event.dart';
@@ -30,12 +31,14 @@ class SetupBloc extends Bloc<SetupEvent, SetupState> {
       SetupStarted event, Emitter<SetupState> emit) async {
     emit(const SetupState.loadingDevices());
     try {
+      final saved         = await SettingsService.instance.load();
       final inputDevices  = await _audioEngine.listInputDevices();
       final outputDevices = await _audioEngine.listOutputDevices();
       final sessions      = await _audioEngine.listAudioSessions();
       emit(SetupState.identity(
-        hubHost:       event.prefilledHost ?? kDefaultHubHost,
-        hubPort:       event.prefilledPort ?? kDefaultHubPort,
+        username:      saved.username     ?? '',
+        hubHost:       event.prefilledHost ?? saved.hubHost ?? kDefaultHubHost,
+        hubPort:       event.prefilledPort ?? saved.hubPort ?? kDefaultHubPort,
         inputDevices:  inputDevices,
         outputDevices: outputDevices,
         audioSessions: sessions,
@@ -61,10 +64,15 @@ class SetupBloc extends Bloc<SetupEvent, SetupState> {
     } catch (_) {}
   }
 
-  void _onIdentitySubmitted(
-      SetupIdentitySubmitted event, Emitter<SetupState> emit) {
+  Future<void> _onIdentitySubmitted(
+      SetupIdentitySubmitted event, Emitter<SetupState> emit) async {
     final current = state;
     if (current is! SetupIdentityState) return;
+    await SettingsService.instance.saveIdentity(
+      username: event.username,
+      hubHost:  event.hubHost,
+      hubPort:  event.hubPort,
+    );
     emit(SetupState.audioInput(
       username:      event.username,
       hubHost:       event.hubHost,
@@ -75,10 +83,15 @@ class SetupBloc extends Bloc<SetupEvent, SetupState> {
     ));
   }
 
-  void _onAudioInputSelected(
-      SetupAudioInputSelected event, Emitter<SetupState> emit) {
+  Future<void> _onAudioInputSelected(
+      SetupAudioInputSelected event, Emitter<SetupState> emit) async {
     final current = state;
     if (current is! SetupAudioInputState) return;
+    await SettingsService.instance.saveAudioInput(
+      inputMode:    event.inputMode,
+      inputDevice:  event.inputDevice,
+      audioSession: event.audioSession,
+    );
     emit(SetupState.audioOutput(
       username:      current.username,
       hubHost:       current.hubHost,
@@ -90,10 +103,11 @@ class SetupBloc extends Bloc<SetupEvent, SetupState> {
     ));
   }
 
-  void _onAudioOutputSelected(
-      SetupAudioOutputSelected event, Emitter<SetupState> emit) {
+  Future<void> _onAudioOutputSelected(
+      SetupAudioOutputSelected event, Emitter<SetupState> emit) async {
     final current = state;
     if (current is! SetupAudioOutputState) return;
+    await SettingsService.instance.saveAudioOutput(event.outputDevice);
     emit(SetupState.proximity(
       username:     current.username,
       hubHost:      current.hubHost,
@@ -105,10 +119,11 @@ class SetupBloc extends Bloc<SetupEvent, SetupState> {
     ));
   }
 
-  void _onProximitySubmitted(
-      SetupProximitySubmitted event, Emitter<SetupState> emit) {
+  Future<void> _onProximitySubmitted(
+      SetupProximitySubmitted event, Emitter<SetupState> emit) async {
     final current = state;
     if (current is! SetupProximityState) return;
+    await SettingsService.instance.saveProximity(event.params);
     emit(SetupState.complete(
       config: SetupConfig(
         username:     current.username,

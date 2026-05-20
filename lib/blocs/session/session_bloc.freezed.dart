@@ -41,6 +41,7 @@ mixin _$SessionEvent {
         peerMetricsUpdated,
     required TResult Function(ProximityParams params) proximityParamsChanged,
     required TResult Function(int id) peerMuteToggled,
+    required TResult Function(int id, double multiplier) peerVolumeChanged,
     required TResult Function() ended,
   }) =>
       throw _privateConstructorUsedError;
@@ -60,6 +61,7 @@ mixin _$SessionEvent {
         peerMetricsUpdated,
     TResult? Function(ProximityParams params)? proximityParamsChanged,
     TResult? Function(int id)? peerMuteToggled,
+    TResult? Function(int id, double multiplier)? peerVolumeChanged,
     TResult? Function()? ended,
   }) =>
       throw _privateConstructorUsedError;
@@ -79,6 +81,7 @@ mixin _$SessionEvent {
         peerMetricsUpdated,
     TResult Function(ProximityParams params)? proximityParamsChanged,
     TResult Function(int id)? peerMuteToggled,
+    TResult Function(int id, double multiplier)? peerVolumeChanged,
     TResult Function()? ended,
     required TResult orElse(),
   }) =>
@@ -98,6 +101,7 @@ mixin _$SessionEvent {
     required TResult Function(SessionProximityParamsChanged value)
         proximityParamsChanged,
     required TResult Function(SessionPeerMuteToggled value) peerMuteToggled,
+    required TResult Function(SessionPeerVolumeChanged value) peerVolumeChanged,
     required TResult Function(SessionEnded value) ended,
   }) =>
       throw _privateConstructorUsedError;
@@ -113,6 +117,7 @@ mixin _$SessionEvent {
     TResult? Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult? Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult? Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult? Function(SessionEnded value)? ended,
   }) =>
       throw _privateConstructorUsedError;
@@ -128,6 +133,7 @@ mixin _$SessionEvent {
     TResult Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult Function(SessionEnded value)? ended,
     required TResult orElse(),
   }) =>
@@ -266,6 +272,7 @@ class _$SessionStartedImpl implements SessionStarted {
         peerMetricsUpdated,
     required TResult Function(ProximityParams params) proximityParamsChanged,
     required TResult Function(int id) peerMuteToggled,
+    required TResult Function(int id, double multiplier) peerVolumeChanged,
     required TResult Function() ended,
   }) {
     return started(selfId, roomCode, username);
@@ -288,6 +295,7 @@ class _$SessionStartedImpl implements SessionStarted {
         peerMetricsUpdated,
     TResult? Function(ProximityParams params)? proximityParamsChanged,
     TResult? Function(int id)? peerMuteToggled,
+    TResult? Function(int id, double multiplier)? peerVolumeChanged,
     TResult? Function()? ended,
   }) {
     return started?.call(selfId, roomCode, username);
@@ -310,6 +318,7 @@ class _$SessionStartedImpl implements SessionStarted {
         peerMetricsUpdated,
     TResult Function(ProximityParams params)? proximityParamsChanged,
     TResult Function(int id)? peerMuteToggled,
+    TResult Function(int id, double multiplier)? peerVolumeChanged,
     TResult Function()? ended,
     required TResult orElse(),
   }) {
@@ -335,6 +344,7 @@ class _$SessionStartedImpl implements SessionStarted {
     required TResult Function(SessionProximityParamsChanged value)
         proximityParamsChanged,
     required TResult Function(SessionPeerMuteToggled value) peerMuteToggled,
+    required TResult Function(SessionPeerVolumeChanged value) peerVolumeChanged,
     required TResult Function(SessionEnded value) ended,
   }) {
     return started(this);
@@ -353,6 +363,7 @@ class _$SessionStartedImpl implements SessionStarted {
     TResult? Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult? Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult? Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult? Function(SessionEnded value)? ended,
   }) {
     return started?.call(this);
@@ -371,6 +382,7 @@ class _$SessionStartedImpl implements SessionStarted {
     TResult Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult Function(SessionEnded value)? ended,
     required TResult orElse(),
   }) {
@@ -498,6 +510,7 @@ class _$SessionPeerAddedImpl implements SessionPeerAdded {
         peerMetricsUpdated,
     required TResult Function(ProximityParams params) proximityParamsChanged,
     required TResult Function(int id) peerMuteToggled,
+    required TResult Function(int id, double multiplier) peerVolumeChanged,
     required TResult Function() ended,
   }) {
     return peerAdded(id, name);
@@ -520,6 +533,7 @@ class _$SessionPeerAddedImpl implements SessionPeerAdded {
         peerMetricsUpdated,
     TResult? Function(ProximityParams params)? proximityParamsChanged,
     TResult? Function(int id)? peerMuteToggled,
+    TResult? Function(int id, double multiplier)? peerVolumeChanged,
     TResult? Function()? ended,
   }) {
     return peerAdded?.call(id, name);
@@ -542,6 +556,7 @@ class _$SessionPeerAddedImpl implements SessionPeerAdded {
         peerMetricsUpdated,
     TResult Function(ProximityParams params)? proximityParamsChanged,
     TResult Function(int id)? peerMuteToggled,
+    TResult Function(int id, double multiplier)? peerVolumeChanged,
     TResult Function()? ended,
     required TResult orElse(),
   }) {
@@ -567,6 +582,7 @@ class _$SessionPeerAddedImpl implements SessionPeerAdded {
     required TResult Function(SessionProximityParamsChanged value)
         proximityParamsChanged,
     required TResult Function(SessionPeerMuteToggled value) peerMuteToggled,
+    required TResult Function(SessionPeerVolumeChanged value) peerVolumeChanged,
     required TResult Function(SessionEnded value) ended,
   }) {
     return peerAdded(this);
@@ -585,6 +601,7 @@ class _$SessionPeerAddedImpl implements SessionPeerAdded {
     TResult? Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult? Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult? Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult? Function(SessionEnded value)? ended,
   }) {
     return peerAdded?.call(this);
@@ -603,6 +620,7 @@ class _$SessionPeerAddedImpl implements SessionPeerAdded {
     TResult Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult Function(SessionEnded value)? ended,
     required TResult orElse(),
   }) {
@@ -720,6 +738,7 @@ class _$SessionPeerRemovedImpl implements SessionPeerRemoved {
         peerMetricsUpdated,
     required TResult Function(ProximityParams params) proximityParamsChanged,
     required TResult Function(int id) peerMuteToggled,
+    required TResult Function(int id, double multiplier) peerVolumeChanged,
     required TResult Function() ended,
   }) {
     return peerRemoved(id);
@@ -742,6 +761,7 @@ class _$SessionPeerRemovedImpl implements SessionPeerRemoved {
         peerMetricsUpdated,
     TResult? Function(ProximityParams params)? proximityParamsChanged,
     TResult? Function(int id)? peerMuteToggled,
+    TResult? Function(int id, double multiplier)? peerVolumeChanged,
     TResult? Function()? ended,
   }) {
     return peerRemoved?.call(id);
@@ -764,6 +784,7 @@ class _$SessionPeerRemovedImpl implements SessionPeerRemoved {
         peerMetricsUpdated,
     TResult Function(ProximityParams params)? proximityParamsChanged,
     TResult Function(int id)? peerMuteToggled,
+    TResult Function(int id, double multiplier)? peerVolumeChanged,
     TResult Function()? ended,
     required TResult orElse(),
   }) {
@@ -789,6 +810,7 @@ class _$SessionPeerRemovedImpl implements SessionPeerRemoved {
     required TResult Function(SessionProximityParamsChanged value)
         proximityParamsChanged,
     required TResult Function(SessionPeerMuteToggled value) peerMuteToggled,
+    required TResult Function(SessionPeerVolumeChanged value) peerVolumeChanged,
     required TResult Function(SessionEnded value) ended,
   }) {
     return peerRemoved(this);
@@ -807,6 +829,7 @@ class _$SessionPeerRemovedImpl implements SessionPeerRemoved {
     TResult? Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult? Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult? Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult? Function(SessionEnded value)? ended,
   }) {
     return peerRemoved?.call(this);
@@ -825,6 +848,7 @@ class _$SessionPeerRemovedImpl implements SessionPeerRemoved {
     TResult Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult Function(SessionEnded value)? ended,
     required TResult orElse(),
   }) {
@@ -979,6 +1003,7 @@ class _$SessionPeerPositionUpdatedImpl implements SessionPeerPositionUpdated {
         peerMetricsUpdated,
     required TResult Function(ProximityParams params) proximityParamsChanged,
     required TResult Function(int id) peerMuteToggled,
+    required TResult Function(int id, double multiplier) peerVolumeChanged,
     required TResult Function() ended,
   }) {
     return peerPositionUpdated(id, x, z, yaw, speed);
@@ -1001,6 +1026,7 @@ class _$SessionPeerPositionUpdatedImpl implements SessionPeerPositionUpdated {
         peerMetricsUpdated,
     TResult? Function(ProximityParams params)? proximityParamsChanged,
     TResult? Function(int id)? peerMuteToggled,
+    TResult? Function(int id, double multiplier)? peerVolumeChanged,
     TResult? Function()? ended,
   }) {
     return peerPositionUpdated?.call(id, x, z, yaw, speed);
@@ -1023,6 +1049,7 @@ class _$SessionPeerPositionUpdatedImpl implements SessionPeerPositionUpdated {
         peerMetricsUpdated,
     TResult Function(ProximityParams params)? proximityParamsChanged,
     TResult Function(int id)? peerMuteToggled,
+    TResult Function(int id, double multiplier)? peerVolumeChanged,
     TResult Function()? ended,
     required TResult orElse(),
   }) {
@@ -1048,6 +1075,7 @@ class _$SessionPeerPositionUpdatedImpl implements SessionPeerPositionUpdated {
     required TResult Function(SessionProximityParamsChanged value)
         proximityParamsChanged,
     required TResult Function(SessionPeerMuteToggled value) peerMuteToggled,
+    required TResult Function(SessionPeerVolumeChanged value) peerVolumeChanged,
     required TResult Function(SessionEnded value) ended,
   }) {
     return peerPositionUpdated(this);
@@ -1066,6 +1094,7 @@ class _$SessionPeerPositionUpdatedImpl implements SessionPeerPositionUpdated {
     TResult? Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult? Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult? Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult? Function(SessionEnded value)? ended,
   }) {
     return peerPositionUpdated?.call(this);
@@ -1084,6 +1113,7 @@ class _$SessionPeerPositionUpdatedImpl implements SessionPeerPositionUpdated {
     TResult Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult Function(SessionEnded value)? ended,
     required TResult orElse(),
   }) {
@@ -1247,6 +1277,7 @@ class _$SessionSelfPositionUpdatedImpl implements SessionSelfPositionUpdated {
         peerMetricsUpdated,
     required TResult Function(ProximityParams params) proximityParamsChanged,
     required TResult Function(int id) peerMuteToggled,
+    required TResult Function(int id, double multiplier) peerVolumeChanged,
     required TResult Function() ended,
   }) {
     return selfPositionUpdated(x, z, yaw, speed, isRaceOn);
@@ -1269,6 +1300,7 @@ class _$SessionSelfPositionUpdatedImpl implements SessionSelfPositionUpdated {
         peerMetricsUpdated,
     TResult? Function(ProximityParams params)? proximityParamsChanged,
     TResult? Function(int id)? peerMuteToggled,
+    TResult? Function(int id, double multiplier)? peerVolumeChanged,
     TResult? Function()? ended,
   }) {
     return selfPositionUpdated?.call(x, z, yaw, speed, isRaceOn);
@@ -1291,6 +1323,7 @@ class _$SessionSelfPositionUpdatedImpl implements SessionSelfPositionUpdated {
         peerMetricsUpdated,
     TResult Function(ProximityParams params)? proximityParamsChanged,
     TResult Function(int id)? peerMuteToggled,
+    TResult Function(int id, double multiplier)? peerVolumeChanged,
     TResult Function()? ended,
     required TResult orElse(),
   }) {
@@ -1316,6 +1349,7 @@ class _$SessionSelfPositionUpdatedImpl implements SessionSelfPositionUpdated {
     required TResult Function(SessionProximityParamsChanged value)
         proximityParamsChanged,
     required TResult Function(SessionPeerMuteToggled value) peerMuteToggled,
+    required TResult Function(SessionPeerVolumeChanged value) peerVolumeChanged,
     required TResult Function(SessionEnded value) ended,
   }) {
     return selfPositionUpdated(this);
@@ -1334,6 +1368,7 @@ class _$SessionSelfPositionUpdatedImpl implements SessionSelfPositionUpdated {
     TResult? Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult? Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult? Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult? Function(SessionEnded value)? ended,
   }) {
     return selfPositionUpdated?.call(this);
@@ -1352,6 +1387,7 @@ class _$SessionSelfPositionUpdatedImpl implements SessionSelfPositionUpdated {
     TResult Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult Function(SessionEnded value)? ended,
     required TResult orElse(),
   }) {
@@ -1447,6 +1483,7 @@ class _$SessionGainTickImpl implements SessionGainTick {
         peerMetricsUpdated,
     required TResult Function(ProximityParams params) proximityParamsChanged,
     required TResult Function(int id) peerMuteToggled,
+    required TResult Function(int id, double multiplier) peerVolumeChanged,
     required TResult Function() ended,
   }) {
     return gainTick();
@@ -1469,6 +1506,7 @@ class _$SessionGainTickImpl implements SessionGainTick {
         peerMetricsUpdated,
     TResult? Function(ProximityParams params)? proximityParamsChanged,
     TResult? Function(int id)? peerMuteToggled,
+    TResult? Function(int id, double multiplier)? peerVolumeChanged,
     TResult? Function()? ended,
   }) {
     return gainTick?.call();
@@ -1491,6 +1529,7 @@ class _$SessionGainTickImpl implements SessionGainTick {
         peerMetricsUpdated,
     TResult Function(ProximityParams params)? proximityParamsChanged,
     TResult Function(int id)? peerMuteToggled,
+    TResult Function(int id, double multiplier)? peerVolumeChanged,
     TResult Function()? ended,
     required TResult orElse(),
   }) {
@@ -1516,6 +1555,7 @@ class _$SessionGainTickImpl implements SessionGainTick {
     required TResult Function(SessionProximityParamsChanged value)
         proximityParamsChanged,
     required TResult Function(SessionPeerMuteToggled value) peerMuteToggled,
+    required TResult Function(SessionPeerVolumeChanged value) peerVolumeChanged,
     required TResult Function(SessionEnded value) ended,
   }) {
     return gainTick(this);
@@ -1534,6 +1574,7 @@ class _$SessionGainTickImpl implements SessionGainTick {
     TResult? Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult? Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult? Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult? Function(SessionEnded value)? ended,
   }) {
     return gainTick?.call(this);
@@ -1552,6 +1593,7 @@ class _$SessionGainTickImpl implements SessionGainTick {
     TResult Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult Function(SessionEnded value)? ended,
     required TResult orElse(),
   }) {
@@ -1736,6 +1778,7 @@ class _$SessionPeerMetricsUpdatedImpl implements SessionPeerMetricsUpdated {
         peerMetricsUpdated,
     required TResult Function(ProximityParams params) proximityParamsChanged,
     required TResult Function(int id) peerMuteToggled,
+    required TResult Function(int id, double multiplier) peerVolumeChanged,
     required TResult Function() ended,
   }) {
     return peerMetricsUpdated(
@@ -1759,6 +1802,7 @@ class _$SessionPeerMetricsUpdatedImpl implements SessionPeerMetricsUpdated {
         peerMetricsUpdated,
     TResult? Function(ProximityParams params)? proximityParamsChanged,
     TResult? Function(int id)? peerMuteToggled,
+    TResult? Function(int id, double multiplier)? peerVolumeChanged,
     TResult? Function()? ended,
   }) {
     return peerMetricsUpdated?.call(
@@ -1782,6 +1826,7 @@ class _$SessionPeerMetricsUpdatedImpl implements SessionPeerMetricsUpdated {
         peerMetricsUpdated,
     TResult Function(ProximityParams params)? proximityParamsChanged,
     TResult Function(int id)? peerMuteToggled,
+    TResult Function(int id, double multiplier)? peerVolumeChanged,
     TResult Function()? ended,
     required TResult orElse(),
   }) {
@@ -1808,6 +1853,7 @@ class _$SessionPeerMetricsUpdatedImpl implements SessionPeerMetricsUpdated {
     required TResult Function(SessionProximityParamsChanged value)
         proximityParamsChanged,
     required TResult Function(SessionPeerMuteToggled value) peerMuteToggled,
+    required TResult Function(SessionPeerVolumeChanged value) peerVolumeChanged,
     required TResult Function(SessionEnded value) ended,
   }) {
     return peerMetricsUpdated(this);
@@ -1826,6 +1872,7 @@ class _$SessionPeerMetricsUpdatedImpl implements SessionPeerMetricsUpdated {
     TResult? Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult? Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult? Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult? Function(SessionEnded value)? ended,
   }) {
     return peerMetricsUpdated?.call(this);
@@ -1844,6 +1891,7 @@ class _$SessionPeerMetricsUpdatedImpl implements SessionPeerMetricsUpdated {
     TResult Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult Function(SessionEnded value)? ended,
     required TResult orElse(),
   }) {
@@ -1990,6 +2038,7 @@ class _$SessionProximityParamsChangedImpl
         peerMetricsUpdated,
     required TResult Function(ProximityParams params) proximityParamsChanged,
     required TResult Function(int id) peerMuteToggled,
+    required TResult Function(int id, double multiplier) peerVolumeChanged,
     required TResult Function() ended,
   }) {
     return proximityParamsChanged(params);
@@ -2012,6 +2061,7 @@ class _$SessionProximityParamsChangedImpl
         peerMetricsUpdated,
     TResult? Function(ProximityParams params)? proximityParamsChanged,
     TResult? Function(int id)? peerMuteToggled,
+    TResult? Function(int id, double multiplier)? peerVolumeChanged,
     TResult? Function()? ended,
   }) {
     return proximityParamsChanged?.call(params);
@@ -2034,6 +2084,7 @@ class _$SessionProximityParamsChangedImpl
         peerMetricsUpdated,
     TResult Function(ProximityParams params)? proximityParamsChanged,
     TResult Function(int id)? peerMuteToggled,
+    TResult Function(int id, double multiplier)? peerVolumeChanged,
     TResult Function()? ended,
     required TResult orElse(),
   }) {
@@ -2059,6 +2110,7 @@ class _$SessionProximityParamsChangedImpl
     required TResult Function(SessionProximityParamsChanged value)
         proximityParamsChanged,
     required TResult Function(SessionPeerMuteToggled value) peerMuteToggled,
+    required TResult Function(SessionPeerVolumeChanged value) peerVolumeChanged,
     required TResult Function(SessionEnded value) ended,
   }) {
     return proximityParamsChanged(this);
@@ -2077,6 +2129,7 @@ class _$SessionProximityParamsChangedImpl
     TResult? Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult? Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult? Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult? Function(SessionEnded value)? ended,
   }) {
     return proximityParamsChanged?.call(this);
@@ -2095,6 +2148,7 @@ class _$SessionProximityParamsChangedImpl
     TResult Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult Function(SessionEnded value)? ended,
     required TResult orElse(),
   }) {
@@ -2214,6 +2268,7 @@ class _$SessionPeerMuteToggledImpl implements SessionPeerMuteToggled {
         peerMetricsUpdated,
     required TResult Function(ProximityParams params) proximityParamsChanged,
     required TResult Function(int id) peerMuteToggled,
+    required TResult Function(int id, double multiplier) peerVolumeChanged,
     required TResult Function() ended,
   }) {
     return peerMuteToggled(id);
@@ -2236,6 +2291,7 @@ class _$SessionPeerMuteToggledImpl implements SessionPeerMuteToggled {
         peerMetricsUpdated,
     TResult? Function(ProximityParams params)? proximityParamsChanged,
     TResult? Function(int id)? peerMuteToggled,
+    TResult? Function(int id, double multiplier)? peerVolumeChanged,
     TResult? Function()? ended,
   }) {
     return peerMuteToggled?.call(id);
@@ -2258,6 +2314,7 @@ class _$SessionPeerMuteToggledImpl implements SessionPeerMuteToggled {
         peerMetricsUpdated,
     TResult Function(ProximityParams params)? proximityParamsChanged,
     TResult Function(int id)? peerMuteToggled,
+    TResult Function(int id, double multiplier)? peerVolumeChanged,
     TResult Function()? ended,
     required TResult orElse(),
   }) {
@@ -2283,6 +2340,7 @@ class _$SessionPeerMuteToggledImpl implements SessionPeerMuteToggled {
     required TResult Function(SessionProximityParamsChanged value)
         proximityParamsChanged,
     required TResult Function(SessionPeerMuteToggled value) peerMuteToggled,
+    required TResult Function(SessionPeerVolumeChanged value) peerVolumeChanged,
     required TResult Function(SessionEnded value) ended,
   }) {
     return peerMuteToggled(this);
@@ -2301,6 +2359,7 @@ class _$SessionPeerMuteToggledImpl implements SessionPeerMuteToggled {
     TResult? Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult? Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult? Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult? Function(SessionEnded value)? ended,
   }) {
     return peerMuteToggled?.call(this);
@@ -2319,6 +2378,7 @@ class _$SessionPeerMuteToggledImpl implements SessionPeerMuteToggled {
     TResult Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult Function(SessionEnded value)? ended,
     required TResult orElse(),
   }) {
@@ -2339,6 +2399,246 @@ abstract class SessionPeerMuteToggled implements SessionEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SessionPeerMuteToggledImplCopyWith<_$SessionPeerMuteToggledImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SessionPeerVolumeChangedImplCopyWith<$Res> {
+  factory _$$SessionPeerVolumeChangedImplCopyWith(
+          _$SessionPeerVolumeChangedImpl value,
+          $Res Function(_$SessionPeerVolumeChangedImpl) then) =
+      __$$SessionPeerVolumeChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int id, double multiplier});
+}
+
+/// @nodoc
+class __$$SessionPeerVolumeChangedImplCopyWithImpl<$Res>
+    extends _$SessionEventCopyWithImpl<$Res, _$SessionPeerVolumeChangedImpl>
+    implements _$$SessionPeerVolumeChangedImplCopyWith<$Res> {
+  __$$SessionPeerVolumeChangedImplCopyWithImpl(
+      _$SessionPeerVolumeChangedImpl _value,
+      $Res Function(_$SessionPeerVolumeChangedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SessionEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? multiplier = null,
+  }) {
+    return _then(_$SessionPeerVolumeChangedImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      multiplier: null == multiplier
+          ? _value.multiplier
+          : multiplier // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SessionPeerVolumeChangedImpl implements SessionPeerVolumeChanged {
+  const _$SessionPeerVolumeChangedImpl(
+      {required this.id, required this.multiplier});
+
+  @override
+  final int id;
+  @override
+  final double multiplier;
+
+  @override
+  String toString() {
+    return 'SessionEvent.peerVolumeChanged(id: $id, multiplier: $multiplier)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SessionPeerVolumeChangedImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.multiplier, multiplier) ||
+                other.multiplier == multiplier));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, multiplier);
+
+  /// Create a copy of SessionEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SessionPeerVolumeChangedImplCopyWith<_$SessionPeerVolumeChangedImpl>
+      get copyWith => __$$SessionPeerVolumeChangedImplCopyWithImpl<
+          _$SessionPeerVolumeChangedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(int selfId, String roomCode, String username)
+        started,
+    required TResult Function(int id, String name) peerAdded,
+    required TResult Function(int id) peerRemoved,
+    required TResult Function(
+            int id, double x, double z, double yaw, double speed)
+        peerPositionUpdated,
+    required TResult Function(
+            double x, double z, double yaw, double speed, bool isRaceOn)
+        selfPositionUpdated,
+    required TResult Function() gainTick,
+    required TResult Function(
+            int id,
+            double distanceM,
+            double rawGain,
+            double gainL,
+            double gainR,
+            double pan,
+            double dopplerFactor,
+            int bufferMs)
+        peerMetricsUpdated,
+    required TResult Function(ProximityParams params) proximityParamsChanged,
+    required TResult Function(int id) peerMuteToggled,
+    required TResult Function(int id, double multiplier) peerVolumeChanged,
+    required TResult Function() ended,
+  }) {
+    return peerVolumeChanged(id, multiplier);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(int selfId, String roomCode, String username)? started,
+    TResult? Function(int id, String name)? peerAdded,
+    TResult? Function(int id)? peerRemoved,
+    TResult? Function(int id, double x, double z, double yaw, double speed)?
+        peerPositionUpdated,
+    TResult? Function(
+            double x, double z, double yaw, double speed, bool isRaceOn)?
+        selfPositionUpdated,
+    TResult? Function()? gainTick,
+    TResult? Function(int id, double distanceM, double rawGain, double gainL,
+            double gainR, double pan, double dopplerFactor, int bufferMs)?
+        peerMetricsUpdated,
+    TResult? Function(ProximityParams params)? proximityParamsChanged,
+    TResult? Function(int id)? peerMuteToggled,
+    TResult? Function(int id, double multiplier)? peerVolumeChanged,
+    TResult? Function()? ended,
+  }) {
+    return peerVolumeChanged?.call(id, multiplier);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int selfId, String roomCode, String username)? started,
+    TResult Function(int id, String name)? peerAdded,
+    TResult Function(int id)? peerRemoved,
+    TResult Function(int id, double x, double z, double yaw, double speed)?
+        peerPositionUpdated,
+    TResult Function(
+            double x, double z, double yaw, double speed, bool isRaceOn)?
+        selfPositionUpdated,
+    TResult Function()? gainTick,
+    TResult Function(int id, double distanceM, double rawGain, double gainL,
+            double gainR, double pan, double dopplerFactor, int bufferMs)?
+        peerMetricsUpdated,
+    TResult Function(ProximityParams params)? proximityParamsChanged,
+    TResult Function(int id)? peerMuteToggled,
+    TResult Function(int id, double multiplier)? peerVolumeChanged,
+    TResult Function()? ended,
+    required TResult orElse(),
+  }) {
+    if (peerVolumeChanged != null) {
+      return peerVolumeChanged(id, multiplier);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(SessionStarted value) started,
+    required TResult Function(SessionPeerAdded value) peerAdded,
+    required TResult Function(SessionPeerRemoved value) peerRemoved,
+    required TResult Function(SessionPeerPositionUpdated value)
+        peerPositionUpdated,
+    required TResult Function(SessionSelfPositionUpdated value)
+        selfPositionUpdated,
+    required TResult Function(SessionGainTick value) gainTick,
+    required TResult Function(SessionPeerMetricsUpdated value)
+        peerMetricsUpdated,
+    required TResult Function(SessionProximityParamsChanged value)
+        proximityParamsChanged,
+    required TResult Function(SessionPeerMuteToggled value) peerMuteToggled,
+    required TResult Function(SessionPeerVolumeChanged value) peerVolumeChanged,
+    required TResult Function(SessionEnded value) ended,
+  }) {
+    return peerVolumeChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(SessionStarted value)? started,
+    TResult? Function(SessionPeerAdded value)? peerAdded,
+    TResult? Function(SessionPeerRemoved value)? peerRemoved,
+    TResult? Function(SessionPeerPositionUpdated value)? peerPositionUpdated,
+    TResult? Function(SessionSelfPositionUpdated value)? selfPositionUpdated,
+    TResult? Function(SessionGainTick value)? gainTick,
+    TResult? Function(SessionPeerMetricsUpdated value)? peerMetricsUpdated,
+    TResult? Function(SessionProximityParamsChanged value)?
+        proximityParamsChanged,
+    TResult? Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult? Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
+    TResult? Function(SessionEnded value)? ended,
+  }) {
+    return peerVolumeChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(SessionStarted value)? started,
+    TResult Function(SessionPeerAdded value)? peerAdded,
+    TResult Function(SessionPeerRemoved value)? peerRemoved,
+    TResult Function(SessionPeerPositionUpdated value)? peerPositionUpdated,
+    TResult Function(SessionSelfPositionUpdated value)? selfPositionUpdated,
+    TResult Function(SessionGainTick value)? gainTick,
+    TResult Function(SessionPeerMetricsUpdated value)? peerMetricsUpdated,
+    TResult Function(SessionProximityParamsChanged value)?
+        proximityParamsChanged,
+    TResult Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
+    TResult Function(SessionEnded value)? ended,
+    required TResult orElse(),
+  }) {
+    if (peerVolumeChanged != null) {
+      return peerVolumeChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SessionPeerVolumeChanged implements SessionEvent {
+  const factory SessionPeerVolumeChanged(
+      {required final int id,
+      required final double multiplier}) = _$SessionPeerVolumeChangedImpl;
+
+  int get id;
+  double get multiplier;
+
+  /// Create a copy of SessionEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SessionPeerVolumeChangedImplCopyWith<_$SessionPeerVolumeChangedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -2406,6 +2706,7 @@ class _$SessionEndedImpl implements SessionEnded {
         peerMetricsUpdated,
     required TResult Function(ProximityParams params) proximityParamsChanged,
     required TResult Function(int id) peerMuteToggled,
+    required TResult Function(int id, double multiplier) peerVolumeChanged,
     required TResult Function() ended,
   }) {
     return ended();
@@ -2428,6 +2729,7 @@ class _$SessionEndedImpl implements SessionEnded {
         peerMetricsUpdated,
     TResult? Function(ProximityParams params)? proximityParamsChanged,
     TResult? Function(int id)? peerMuteToggled,
+    TResult? Function(int id, double multiplier)? peerVolumeChanged,
     TResult? Function()? ended,
   }) {
     return ended?.call();
@@ -2450,6 +2752,7 @@ class _$SessionEndedImpl implements SessionEnded {
         peerMetricsUpdated,
     TResult Function(ProximityParams params)? proximityParamsChanged,
     TResult Function(int id)? peerMuteToggled,
+    TResult Function(int id, double multiplier)? peerVolumeChanged,
     TResult Function()? ended,
     required TResult orElse(),
   }) {
@@ -2475,6 +2778,7 @@ class _$SessionEndedImpl implements SessionEnded {
     required TResult Function(SessionProximityParamsChanged value)
         proximityParamsChanged,
     required TResult Function(SessionPeerMuteToggled value) peerMuteToggled,
+    required TResult Function(SessionPeerVolumeChanged value) peerVolumeChanged,
     required TResult Function(SessionEnded value) ended,
   }) {
     return ended(this);
@@ -2493,6 +2797,7 @@ class _$SessionEndedImpl implements SessionEnded {
     TResult? Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult? Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult? Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult? Function(SessionEnded value)? ended,
   }) {
     return ended?.call(this);
@@ -2511,6 +2816,7 @@ class _$SessionEndedImpl implements SessionEnded {
     TResult Function(SessionProximityParamsChanged value)?
         proximityParamsChanged,
     TResult Function(SessionPeerMuteToggled value)? peerMuteToggled,
+    TResult Function(SessionPeerVolumeChanged value)? peerVolumeChanged,
     TResult Function(SessionEnded value)? ended,
     required TResult orElse(),
   }) {

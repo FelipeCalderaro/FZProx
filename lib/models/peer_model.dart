@@ -22,5 +22,7 @@ class PeerModel with _$PeerModel {
     @Default(0)   int    bufferMs,
     // Manual mute — silences this peer regardless of proximity
     @Default(false) bool muted,
+    // Per-peer volume multiplier (0.0 = silent, 1.0 = normal, 2.0 = double, etc.)
+    @Default(1.0) double volumeMultiplier,
   }) = _PeerModel;
 }
