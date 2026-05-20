@@ -31,14 +31,13 @@ HorizonProx has two pieces:
 ## Installation
 
 ### Step 1 — Download HorizonProx
-1. Go to the **Releases** page of this project.
-2. Download the latest `HorizonProx.zip` file.
-3. Extract (unzip) it to any folder on your PC — for example, `C:\Games\HorizonProx`.
-4. You'll see two executables inside:
-   - `fzprox.exe` — **the Client** (everyone runs this)
-   - `fzprox_hub.exe` — **the Hub** (only the host runs this)
+1. Go to the **[Releases](https://github.com/FelipeCalderaro/FZProx/releases)** page of this project.
+2. Download the latest `fzprox.rar` file.
+3. Extract (unzip) it to any folder on your PC — for example, `C:\Games\FZProx`.
+4. You'll see the executable inside:
+   - `fzprox.exe` — **the Client/Hub**
 
-> **Windows may show a security warning** the first time you run the app because it's not signed by a big corporation. Click **"More info" → "Run anyway"** to proceed. The app is open-source and safe.
+> **Windows may show a security warning** the first time you run the app because it's not signed by a big corporation. Click **"More info" → "Run anyway"** to proceed.
 
 ---
 
@@ -100,45 +99,74 @@ If you're playing with friends **over the internet**, the easiest and safest app
 
 ## Starting a Session (Step by Step)
 
-### The Hub Host
-
-> The hub host is the person whose PC will act as the relay. Everyone connects to them. **The host also needs to run the Client themselves** to participate in the proximity chat.
-
-1. Open the extracted HorizonProx folder.
-2. **Start the Hub first** by running `fzprox_hub.exe`. A window will appear confirming the hub is running on port `9200`. Leave it open.
-3. **Then run** `fzprox.exe` (the Client) on the **same PC**.
-4. When the Client asks for the **Hub address**, enter: `127.0.0.1:9200`
-   - `127.0.0.1` means "connect to myself" — since the Hub is running on the same machine.
-5. Follow the in-app setup to choose your microphone (or app audio) and your headphone output.
-6. Create or join a **room** using a 4-character code (e.g. `FZRX`). Share this code with your friends.
-7. Launch Forza Horizon and start driving!
+There is only one application: `fzprox.exe`. It works as both the Hub and the Client at the same time — you start the Hub from inside the app if you are the host, then connect to it as a player from the same window.
 
 ---
 
-### Everyone Else (Clients)
+### If you are the Hub Host
 
-1. Open the HorizonProx folder and run **`fzprox.exe`** only (you don't need the hub).
-2. When asked for the **Hub address**, enter the host's **Tailscale IP** followed by `:9200`.
-   - Example: `100.64.0.5:9200`
-   - *(The host should tell you their Tailscale IP — it's shown in the Tailscale app on their PC)*
-3. Choose your **microphone** (or audio app) and **headphones** when prompted.
-4. Enter the **same room code** the host shared with you (e.g. `FZRX`).
-5. Launch Forza Horizon and start driving — you'll hear your friends as they get close!
+> One person in the group needs to host the Hub. You only need to do this if no one else is already hosting. Everyone else skips straight to the "Joining as a Client" section below.
+
+1. Run `fzprox.exe`.
+2. On the Home screen, click **"Run Hub Server"**.
+3. Confirm the port (default is `9200` — leave it as is unless you have a reason to change it) and click **"Start Hub"**.
+4. The screen will confirm the Hub is running. You will also see a small badge in the bottom-right corner of the app that shows the Hub status at all times.
+5. Now you need to also connect to your own Hub as a player. Click the **"Connect as Client"** button on this same screen. The app will automatically fill in `localhost` as the address — you do not need to type anything.
+6. Complete the setup wizard (see below).
+7. On the Room screen, create a room with a 4-character code (e.g. `FZRX`) and share it with your friends.
+8. Launch Forza Horizon and start driving!
+
+> If you go back to the Home screen while the Hub is running, you will see a **"Connect to My Hub"** shortcut button that does the same thing — it opens the setup wizard with your Hub address pre-filled.
 
 ---
 
-## In-App Settings Explained
+### If you are joining someone else's Hub (Client)
 
-When you first launch the Client, it will ask you a few questions:
+1. Run `fzprox.exe`.
+2. On the Home screen, click **"Join / Host Session"**.
+3. Complete the setup wizard (see below). When asked for the Hub address, enter the host's IP followed by `:9200`.
+   - If using Tailscale: the host's Tailscale IP — example: `100.64.0.5:9200`
+   - If on the same local network: the host's local IP — example: `192.168.1.10:9200`
+4. On the Room screen, enter the same room code the host shared with you (e.g. `FZRX`) and join.
+5. Launch Forza Horizon and start driving — you will hear your friends as they get close!
 
-| Question | What to do |
+---
+
+## Setup Wizard Explained
+
+After clicking "Join / Host Session" or "Connect as Client", the app walks you through a 4-step wizard:
+
+**Step 1 — Identity**
+
+| Field | What to enter |
 |---|---|
-| **Username** | Type your name as you want others to see it. |
-| **Hub address** | The hub host's IP + `:9200`. If you're the host, type `127.0.0.1:9200`. |
-| **Audio Input** | Choose your microphone, or pick "App" to share audio from a specific program like Spotify. |
-| **Audio Output** | Choose your headphones or speakers. |
-| **Near distance** | How close (in metres) someone needs to be for full volume. Default is fine. |
-| **Far distance** | Beyond this distance, you can't hear them at all. Default is fine. |
+| Username | Your name as others will see it in the session. |
+| Hub address | The IP and port of the Hub. If you are the host, this is pre-filled as `localhost:9200`. If you are a client, enter the host's IP (e.g. `100.64.0.5:9200`). |
+
+**Step 2 — Audio Input**
+
+Choose what audio other players will hear from you:
+
+| Option | When to use it |
+|---|---|
+| Microphone | Your default mic. The most common option. |
+| System Loopback | Captures everything playing on your speakers/headphones — music, game audio, and mic. |
+| App Capture | Captures audio from one specific app only (e.g. Spotify). Requires Windows 10 version 2004 or later. |
+
+**Step 3 — Audio Output**
+
+Choose which speakers or headphones you want to hear other players through. Leave it on the default if you are unsure.
+
+**Step 4 — Proximity Settings**
+
+Controls how audio fades with distance. The defaults work well — only change these if you want a different feel:
+
+| Setting | What it does | Default |
+|---|---|---|
+| Near distance | Inside this range (metres), others sound at full volume. | 10 m |
+| Far distance | Beyond this range, others are completely silent. | 80 m |
+| Curve | How quickly volume drops between near and far. Higher = drops faster. | 2.0 |
+| Panning | Enables stereo panning so you can hear which direction friends are in. | On |
 
 ---
 
