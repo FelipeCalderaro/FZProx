@@ -208,9 +208,14 @@ class _RadarPainter extends CustomPainter {
     final rx   =  dx * cosY - dz * sinY;
     final rz   =  dx * sinY + dz * cosY;
 
-    // Map to screen: Z is depth (forward = up = -Y in screen space)
-    final screenX = cx + (rx / _worldRadius) * r;
-    final screenY = cy - (rz / _worldRadius) * r;
+    // Map to screen.
+    // Forza uses a left-handed coordinate system where +Z points South and
+    // +X points West, so both axis offsets must be negated to match the
+    // "F = up, R = right" radar convention:
+    //   rx > 0 (rotated east)  → appears to the LEFT  → negate → cx - rx
+    //   rz > 0 (rotated south) → appears at BOTTOM    → negate → cy + rz
+    final screenX = cx - (rx / _worldRadius) * r;
+    final screenY = cy + (rz / _worldRadius) * r;
 
     // Clamp to circle edge with a small blip
     final dist    = sqrt(pow(screenX - cx, 2) + pow(screenY - cy, 2));

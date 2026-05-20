@@ -16,6 +16,10 @@ class OpusCodecService {
   OpusCodecService._();
   static final OpusCodecService instance = OpusCodecService._();
 
+  /// Set to false to force raw-PCM mode regardless of whether the codec loaded.
+  /// Flip to true to re-enable Opus compression.
+  static const bool kEnabled = false;
+
   bool _ready = false;
   SimpleOpusEncoder? _encoder;
   SimpleOpusDecoder? _decoder;
@@ -52,7 +56,7 @@ class OpusCodecService {
     }
   }
 
-  bool get isReady => _ready;
+  bool get isReady => kEnabled && _ready;
 
   /// Encodes a 960-sample Int16List to an Opus packet (typically 20–80 bytes).
   /// Returns null if the codec is not yet initialised.
