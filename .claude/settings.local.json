@@ -4,7 +4,8 @@
       "Bash(flutter analyze *)",
       "Bash(dart run *)",
       "Bash(flutter pub *)",
-      "Bash(dir \"d:\\\\Felipe\\\\Code\\\\Forza Proximity Chat\\\\fzprox\\\\.dart_tool\\\\package_config.json\")"
+      "Bash(dir \"d:\\\\Felipe\\\\Code\\\\Forza Proximity Chat\\\\fzprox\\\\.dart_tool\\\\package_config.json\")",
+      "Bash(flutter build *)"
     ]
   }
 }

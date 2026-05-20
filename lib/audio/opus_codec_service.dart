@@ -1,13 +1,17 @@
+import 'dart:ffi';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:opus_dart/opus_dart.dart';
-import 'package:opus_flutter/opus_flutter.dart' as opus_flutter;
 
 /// Wraps opus_dart encoder + decoder for 20 ms mono 48 kHz frames (960 samples).
 ///
+/// The native `libopus_x64.dll` is installed next to the application executable
+/// by CMake (see windows/CMakeLists.txt).  We open it with [DynamicLibrary.open]
+/// the same way the WASAPI DLL is loaded.
+///
 /// Call [init] once at app startup (or lazily before first use).
-/// Both [encode] and [decode] are synchronous and safe to call from any isolate
-/// once the library has been loaded (loading itself is async).
+/// Both [encode] and [decode] are synchronous after initialisation.
 class OpusCodecService {
   OpusCodecService._();
   static final OpusCodecService instance = OpusCodecService._();
@@ -23,18 +27,29 @@ class OpusCodecService {
   /// Safe to call multiple times — subsequent calls are no-ops.
   Future<void> init() async {
     if (_ready) return;
-    final lib = await opus_flutter.load();
-    initOpus(lib);
-    _encoder = SimpleOpusEncoder(
-      sampleRate:  _sampleRate,
-      channels:    _channels,
-      application: Application.voip,
-    );
-    _decoder = SimpleOpusDecoder(
-      sampleRate: _sampleRate,
-      channels:   _channels,
-    );
-    _ready = true;
+    try {
+      // Resolve path relative to the running executable so it works in both
+      // debug (build/windows/x64/runner/Debug/) and release layouts.
+      final exeDir = File(Platform.resolvedExecutable).parent.path;
+      final lib    = DynamicLibrary.open('$exeDir\\libopus_x64.dll');
+      // opus_dart's initOpus signature uses web_ffi's DynamicLibrary proxy
+      // type; cast to dynamic so dart:ffi's native DynamicLibrary is accepted.
+      initOpus(lib as dynamic);
+      _encoder = SimpleOpusEncoder(
+        sampleRate:  _sampleRate,
+        channels:    _channels,
+        application: Application.voip,
+      );
+      _decoder = SimpleOpusDecoder(
+        sampleRate: _sampleRate,
+        channels:   _channels,
+      );
+      _ready = true;
+    } catch (e) {
+      // Not fatal — sender/receiver will fall back to raw PCM.
+      // ignore: avoid_print
+      print('[OpusCodecService] Failed to load libopus_x64.dll: $e');
+    }
   }
 
   bool get isReady => _ready;
