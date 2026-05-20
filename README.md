@@ -1,8 +1,17 @@
 # HorizonProx
 
+![Banner](assets/2483190_3.jpg)
+
 **HorizonProx** is a free tool that adds **proximity voice chat** to Forza Horizon. Just like in real life, you can hear your friends' audio fade in and out based on how close their car is to yours. The closer they are, the louder they sound — and if they race past you, you'll even hear the Doppler effect!
 
 No subscriptions, no accounts needed. Just download, set it up once, and drive.
+
+---
+
+<!-- VIDEO DEMO — drop your recording as assets/demo.mp4 and this will render automatically on GitHub -->
+<video src="assets/demo.mp4" controls width="100%">
+  Video demo coming soon.
+</video>
 
 ---
 
