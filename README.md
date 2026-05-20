@@ -8,7 +8,6 @@ No subscriptions, no accounts needed. Just download, set it up once, and drive.
 
 ---
 
-<!-- VIDEO DEMO — drop your recording as assets/demo.mp4 and this will render automatically on GitHub -->
 <video src="assets/demo.mp4" controls width="100%">
   Video demo coming soon.
 </video>
