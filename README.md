@@ -8,7 +8,7 @@ No subscriptions, no accounts needed. Just download, set it up once, and drive.
 
 ---
 
-<video src="assets/demo.mp4" controls width="100%">
+<video src="assets/Forza Horizon 6 - 2026-05-22 03-10-51.mp4" controls width="100%">
   Video demo coming soon.
 </video>
 
